@@ -198,11 +198,13 @@ export const DEFAULT_POLICY: RewardPolicyConfig = {
 
 const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
 if (isMain) {
-  // production: use Prisma store against canonical PG (direct import, bundled)
+  // production: use Prisma store against canonical PG + load active RewardPolicy from DB
   const { PrismaStore } = await import("./store-prisma.js");
   const store = new PrismaStore(process.env.FRY3_DATABASE_URL);
-  const app = buildServer({ policy: DEFAULT_POLICY, store });
+  const dbPolicy = await store.getActivePolicy().catch(() => null);
+  const policy = dbPolicy ?? DEFAULT_POLICY;
+  const app = buildServer({ policy, store });
   app.listen({ port: Number(process.env.PORT ?? 3000), host: process.env.HOST ?? "0.0.0.0" }).then(() => {
-    console.log("fry3 api listening");
+    console.log(`fry3 api listening (policy v${policy.version}, storageWeight=${policy.storageCapabilityWeight})`);
   });
 }

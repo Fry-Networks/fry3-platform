@@ -14,6 +14,21 @@ export class PrismaStore implements ApiStore {
     this.prisma = new PrismaClient(databaseUrl ? { datasources: { db: { url: databaseUrl } } } : undefined);
   }
 
+  async getActivePolicy() {
+    const p = await this.prisma.rewardPolicy.findFirst({ orderBy: { version: "desc" } });
+    if (!p) return null;
+    const weights: Record<string, bigint> = {};
+    const w = (p.weights as Record<string, string>) ?? {};
+    for (const k of Object.keys(w)) weights[k] = BigInt(w[k]);
+    return {
+      version: p.version,
+      weights,
+      storageCapabilityWeight: BigInt(p.storageCapabilityWeight),
+      onlineThresholdSeconds: p.onlineThresholdSeconds,
+      intervalSeconds: p.intervalSeconds,
+    };
+  }
+
   async getDeviceState(deviceId: string) {
     const d = await this.prisma.device.findFirst({
       where: { OR: [{ id: deviceId }, { canonicalId: deviceId }, { minerKey: deviceId }] },
