@@ -2,11 +2,14 @@
  * Prisma-backed ApiStore against canonical PG.
  * Transactional claim reservation (claim row + ledger entry, atomic).
  */
-import { PrismaClient } from "@prisma/client";
 import type { ApiStore } from "./server.js";
+// ESM import; PrismaClient is external at bundle time, resolved at runtime.
+// Typed as any to avoid a hard dependency on the generated client's types at typecheck.
+import pkg from "@prisma/client";
+const { PrismaClient } = pkg as any;
 
 export class PrismaStore implements ApiStore {
-  private prisma: PrismaClient;
+  private prisma: any;
   constructor(databaseUrl?: string) {
     this.prisma = new PrismaClient(databaseUrl ? { datasources: { db: { url: databaseUrl } } } : undefined);
   }
