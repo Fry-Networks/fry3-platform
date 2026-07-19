@@ -1,0 +1,15 @@
+{
+  "name": "@fry3/api",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "vitest run", "build": "tsc -p tsconfig.json", "start": "node dist/server.js", "lint": "echo lint-skip", "typecheck": "tsc --noEmit -p tsconfig.json" },
+  "dependencies": {
+    "fastify": "^4.28.0",
+    "@fry3/reward-policy": "*",
+    "@fry3/heartbeat-ingest": "*",
+    "@fry3/claim-dispatcher": "*",
+    "@fry3/integration-health": "*"
+  },
+  "devDependencies": { "typescript": "^5.5.0", "vitest": "^2.0.0", "@types/node": "^20" }
+}
