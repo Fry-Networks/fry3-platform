@@ -1,0 +1,14 @@
+.git
+**/node_modules
+**/dist
+**/.next
+**/out
+**/*.log
+**/.env
+**/.env.*
+**/*.test.ts
+**/test
+**/coverage
+**/.dockerignore
+**/Dockerfile
+**/*.md

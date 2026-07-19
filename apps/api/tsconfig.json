@@ -8,7 +8,14 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@fry3/reward-policy": ["../../packages/reward-policy/src/index.ts"],
+      "@fry3/integration-health": ["../../packages/integration-health/src/index.ts"],
+      "@fry3/heartbeat-ingest": ["../../services/heartbeat-ingest/src/online-state.ts"],
+      "@fry3/claim-dispatcher": ["../../services/claim-dispatcher/src/claim.ts"]
+    }
   },
   "include": ["src", "test"]
 }

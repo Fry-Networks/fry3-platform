@@ -116,9 +116,10 @@ export const DEFAULT_POLICY: RewardPolicyConfig = {
   intervalSeconds: 3600,
 };
 
-if (require.main === module) {
+const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+if (isMain) {
   const app = buildServer({ policy: DEFAULT_POLICY });
-  app.listen({ port: Number(process.env.PORT ?? 3000), host: "127.0.0.1" }).then(() => {
+  app.listen({ port: Number(process.env.PORT ?? 3000), host: process.env.HOST ?? "0.0.0.0" }).then(() => {
     console.log("fry3 api listening");
   });
 }
