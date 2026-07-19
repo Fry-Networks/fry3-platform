@@ -1,0 +1,48 @@
+# Fry 3.0 staging stack — side-by-side, Fry-only network, nonconflicting ports.
+# Maintenance routing preserved (this stack is NOT public until cutover).
+name: fry3
+networks:
+  fry3-net:
+    external: true
+
+services:
+  api:
+    build:
+      context: ../../
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: fry3-api
+    networks: [fry3-net]
+    environment:
+      FRY3_DATABASE_URL: postgresql://postgres:${FRY3_PGPW}@fry3-postgres:5432/fry3
+      PORT: "3000"
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on: []
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: ../../apps/web
+      dockerfile: ../../infra/docker/web.Dockerfile
+    container_name: fry3-web
+    networks: [fry3-net]
+    ports:
+      - "127.0.0.1:3100:3000"
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ../../apps/dashboard
+      dockerfile: ../../infra/docker/nextapp.Dockerfile
+    container_name: fry3-dashboard
+    networks: [fry3-net]
+    environment:
+      NEXT_PUBLIC_FRY3_API: http://fry3-api:3000
+    ports:
+      - "127.0.0.1:3101:3000"
+    restart: unless-stopped
