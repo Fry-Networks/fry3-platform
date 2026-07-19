@@ -1,0 +1,35 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: reward-policy
+        run: cd packages/reward-policy && npm install && npx vitest run && npx tsc --noEmit -p tsconfig.json
+      - name: integration-health
+        run: cd packages/integration-health && npm install && npx vitest run
+      - name: compat
+        run: cd packages/compat && npm install && npx vitest run
+      - name: heartbeat-ingest
+        run: cd services/heartbeat-ingest && npm install && npx vitest run
+      - name: claim-dispatcher
+        run: cd services/claim-dispatcher && npm install && npx vitest run
+      - name: reward-engine
+        run: cd services/reward-engine && npm install && npx vitest run
+      - name: bridge-relayer
+        run: cd services/bridge-relayer && npm install && npx vitest run
+      - name: discord-bot
+        run: cd services/discord-bot && npm install && npx vitest run
+      - name: helpdesk-bot
+        run: cd services/helpdesk-bot && npm install && npx vitest run
+      - name: timeclock-backend
+        run: cd services/timeclock-backend && npm install && npx vitest run
+      - name: migrations
+        run: cd infra/migrations && npm install && npx vitest run
+      - name: api
+        run: cd apps/api && npm install && npx vitest run && npx tsc --noEmit -p tsconfig.json
+      - name: web build
+        run: cd apps/web && npm install && npm run build
