@@ -1,0 +1,1 @@
+{"name":"@fry3/db","version":"3.0.0","private":true,"scripts":{"build":"prisma generate","lint":"echo lint-skip","typecheck":"echo ok"},"dependencies":{"@prisma/client":"^5.18.0"},"devDependencies":{"prisma":"^5.18.0","typescript":"^5.5.0"}}
