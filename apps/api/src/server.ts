@@ -148,6 +148,43 @@ export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore
     return { success: true, claimId: claim.id, amountBase: decision.amountBase!.toString(), status: ClaimStatus.RESERVED };
   });
 
+  // ---- admin / observability (operator-auth gated) ----
+  const requireOperator = (req: any, reply: any) => {
+    const tok = req.headers["x-fry3-operator"];
+    const expected = process.env.FRY3_OPERATOR_TOKEN;
+    if (!expected || tok !== expected) {
+      reply.code(401).send({ reason: "operator_auth_required" });
+      return false;
+    }
+    return true;
+  };
+
+  app.get("/api/v1/admin/health-detail", async (req, reply) => {
+    if (!requireOperator(req, reply)) return;
+    if (!store) return reply.code(503).send({ reason: "store_unavailable" });
+    const probe = await store.getDeviceState("__probe__").catch(() => null);
+    return { store: "up", policyVersion: policy.version, onlineThresholdSeconds: policy.onlineThresholdSeconds, ts: new Date().toISOString(), probe };
+  });
+
+  app.get("/api/v1/admin/devices/:id/reward-explanation", async (req, reply) => {
+    if (!requireOperator(req, reply)) return;
+    if (!store) return reply.code(503).send({ reason: "store_unavailable" });
+    const { id } = req.params as any;
+    const s = await store.getDeviceState(id);
+    if (!s) return reply.code(404).send({ reason: "device_not_found" });
+    const state = classifyOnlineState({ lastHeartbeatAt: s.lastHeartbeatAt, banned: s.banned, disabled: s.disabled, now: new Date(), onlineThresholdSeconds: policy.onlineThresholdSeconds });
+    return { deviceId: id, status: state, lastHeartbeatAt: s.lastHeartbeatAt, banned: s.banned, disabled: s.disabled, policyVersion: policy.version };
+  });
+
+  app.get("/api/v1/admin/claims/:key", async (req, reply) => {
+    if (!requireOperator(req, reply)) return;
+    if (!store) return reply.code(503).send({ reason: "store_unavailable" });
+    const { key } = req.params as any;
+    const c = await store.claimByIdempotencyKey(key);
+    if (!c) return reply.code(404).send({ reason: "claim_not_found" });
+    return c;
+  });
+
   return app;
 }
 

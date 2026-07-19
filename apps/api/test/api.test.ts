@@ -102,3 +102,25 @@ describe("api (DB-backed handlers)", () => {
     expect(r.statusCode).toBe(400);
   });
 });
+
+describe("admin / observability (operator-gated)", () => {
+  let app2: ReturnType<typeof buildServer>;
+  let store2: ReturnType<typeof makeStore>;
+  beforeAll(async () => { process.env.FRY3_OPERATOR_TOKEN = "test-op-token"; store2 = makeStore(); app2 = buildServer({ policy, store: store2 }); await app2.ready(); });
+  afterAll(async () => { await app2.close(); delete process.env.FRY3_OPERATOR_TOKEN; });
+
+  it("rejects without operator token", async () => {
+    const r = await app2.inject({ method: "GET", url: "/api/v1/admin/health-detail" });
+    expect(r.statusCode).toBe(401);
+  });
+  it("allows with operator token", async () => {
+    const r = await app2.inject({ method: "GET", url: "/api/v1/admin/health-detail", headers: { "x-fry3-operator": "test-op-token" } });
+    expect(r.statusCode).toBe(200);
+    expect(r.json().store).toBe("up");
+  });
+  it("reward-explanation for device", async () => {
+    const r = await app2.inject({ method: "GET", url: "/api/v1/admin/devices/d-online/reward-explanation", headers: { "x-fry3-operator": "test-op-token" } });
+    expect(r.statusCode).toBe(200);
+    expect(r.json().status).toBe("ONLINE");
+  });
+});
