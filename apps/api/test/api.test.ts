@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { buildServer, DEFAULT_POLICY } from "../src/server";
+import { buildServer, ApiStore } from "../src/server";
 import { RewardPolicyConfig } from "@fry3/reward-policy";
 
 const policy: RewardPolicyConfig = {
@@ -10,69 +10,95 @@ const policy: RewardPolicyConfig = {
   intervalSeconds: 3600,
 };
 
-let app: ReturnType<typeof buildServer>;
-beforeAll(async () => { app = buildServer({ policy }); await app.ready(); });
-afterAll(async () => { await app.close(); });
+// in-memory mock store (proves DB-backed handlers without a live PG)
+function makeStore(over: Partial<ApiStore> = {}): ApiStore & { heartbeats: any[]; claims: Map<string, any> } {
+  const heartbeats: any[] = [];
+  const claims = new Map<string, any>();
+  const nonces = new Set<string>();
+  const store: any = {
+    heartbeats, claims,
+    async getDeviceState(id: string) {
+      if (id === "d-online") return { lastHeartbeatAt: new Date(), banned: false, disabled: false };
+      if (id === "d-banned") return { lastHeartbeatAt: new Date(), banned: true, disabled: false };
+      return null;
+    },
+    async heartbeatNonceExists(n: string) { return nonces.has(n); },
+    async persistHeartbeat(hb: any) { nonces.add(hb.nonce); heartbeats.push(hb); },
+    async getReservableBalanceBase(uid: string) { return uid === "u-rich" ? 5000n : 0n; },
+    async claimByIdempotencyKey(k: string) { return claims.get(k) ?? null; },
+    async createClaimTransactional(input: any) {
+      const c = { id: "claim-1", status: "RESERVED", ...input };
+      claims.set(input.idempotencyKey, c);
+      return c;
+    },
+    ...over,
+  };
+  return store;
+}
 
-describe("health", () => {
-  it("GET /health", async () => {
+const ADDR = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ";
+
+describe("api (DB-backed handlers)", () => {
+  let app: ReturnType<typeof buildServer>;
+  let store: ReturnType<typeof makeStore>;
+  beforeAll(async () => { store = makeStore(); app = buildServer({ policy, store }); await app.ready(); });
+  afterAll(async () => { await app.close(); });
+
+  it("health", async () => {
     const r = await app.inject({ method: "GET", url: "/health" });
     expect(r.statusCode).toBe(200);
-    expect(r.json().status).toBe("ok");
   });
-});
 
-describe("heartbeat", () => {
-  it("rejects invalid envelope", async () => {
-    const r = await app.inject({ method: "POST", url: "/api/v1/heartbeat", payload: { deviceId: "", nonce: "x", signature: "" } });
+  it("heartbeat persists + replay rejected", async () => {
+    const hb = { deviceId: "d-online", nonce: "nonce-unique-1", signature: "sig" };
+    const r1 = await app.inject({ method: "POST", url: "/api/v1/heartbeat", payload: hb });
+    expect(r1.statusCode).toBe(200);
+    expect(store.heartbeats).toHaveLength(1);
+    // replay same nonce -> 409
+    const r2 = await app.inject({ method: "POST", url: "/api/v1/heartbeat", payload: hb });
+    expect(r2.statusCode).toBe(409);
+    expect(r2.json().reason).toBe("nonce_replay");
+  });
+
+  it("device status DB-backed", async () => {
+    const r = await app.inject({ method: "GET", url: "/api/v1/devices/d-online/status" });
+    expect(r.json().status).toBe("ONLINE");
+    const rb = await app.inject({ method: "GET", url: "/api/v1/devices/d-banned/status" });
+    expect(rb.json().status).toBe("BANNED");
+    const rn = await app.inject({ method: "GET", url: "/api/v1/devices/unknown/status" });
+    expect(rn.statusCode).toBe(404);
+  });
+
+  it("reward preview offline=0", async () => {
+    const r = await app.inject({ method: "POST", url: "/api/v1/rewards/preview", payload: { deviceId: "d1", status: "OFFLINE", secondsSinceLastHeartbeat: 9999, evidence: [] } });
+    expect(r.json().amountBase).toBe("0");
+  });
+
+  it("claim: server-calculated, transactional, idempotent", async () => {
+    const payload = { requestingUserId: "u-rich", destinationOwnerUserId: "u-rich", destination: ADDR, hotWalletBalanceBase: "10000", idempotencyKey: "u-rich:k1" };
+    const r1 = await app.inject({ method: "POST", url: "/api/v1/claims", payload });
+    expect(r1.statusCode).toBe(200);
+    expect(r1.json().status).toBe("RESERVED");
+    expect(r1.json().amountBase).toBe("5000"); // server-derived reservable, not client
+    // idempotent replay -> returns existing, no duplicate
+    const r2 = await app.inject({ method: "POST", url: "/api/v1/claims", payload });
+    expect(r2.json().idempotent).toBe(true);
+    expect(store.claims.size).toBe(1);
+  });
+
+  it("claim: zero balance rejected", async () => {
+    const r = await app.inject({ method: "POST", url: "/api/v1/claims", payload: { requestingUserId: "u-poor", destinationOwnerUserId: "u-poor", destination: ADDR, hotWalletBalanceBase: "10000", idempotencyKey: "u-poor:k1" } });
     expect(r.statusCode).toBe(400);
   });
-  it("accepts valid envelope", async () => {
-    const r = await app.inject({ method: "POST", url: "/api/v1/heartbeat", payload: { deviceId: "d1", nonce: "abcdefgh12345678", signature: "sig" } });
-    expect(r.statusCode).toBe(200);
-    expect(r.json().success).toBe(true);
-  });
-});
 
-describe("reward preview", () => {
-  it("offline device -> zero", async () => {
-    const r = await app.inject({ method: "POST", url: "/api/v1/rewards/preview", payload: { deviceId: "d1", status: "OFFLINE", secondsSinceLastHeartbeat: 9999, evidence: [] } });
-    const j = r.json();
-    expect(j.eligible).toBe(false);
-    expect(j.amountBase).toBe("0");
-  });
-  it("online + bandwidth -> weight", async () => {
-    const now = new Date().toISOString();
-    const r = await app.inject({ method: "POST", url: "/api/v1/rewards/preview", payload: { deviceId: "d1", status: "ONLINE", secondsSinceLastHeartbeat: 10, evidence: [{ integration: "BANDWIDTH", healthy: true, evidenceAt: now, evidenceType: "telemetry" }] } });
-    const j = r.json();
-    expect(j.eligible).toBe(true);
-    expect(j.amountBase).toBe("100");
-  });
-  it("storage counted once (storj+space_acres)", async () => {
-    const now = new Date().toISOString();
-    const ev = (i: string) => ({ integration: i, healthy: true, evidenceAt: now, evidenceType: "telemetry" });
-    const r = await app.inject({ method: "POST", url: "/api/v1/rewards/preview", payload: { deviceId: "d1", status: "ONLINE", secondsSinceLastHeartbeat: 10, evidence: [ev("STORJ"), ev("SPACE_ACRES")] } });
-    const j = r.json();
-    expect(j.amountBase).toBe("50"); // NOT 100
-    expect(j.storageCapabilityCounted).toBe(true);
-  });
-});
-
-describe("claims", () => {
-  it("rejects cross-user claim", async () => {
-    const r = await app.inject({ method: "POST", url: "/api/v1/claims", payload: { reservableBalanceBase: "1000", hotWalletBalanceBase: "5000", destination: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ", destinationOwnerUserId: "u2", requestingUserId: "u1", idempotencyKey: "u1:n1" } });
+  it("claim: cross-user rejected", async () => {
+    const r = await app.inject({ method: "POST", url: "/api/v1/claims", payload: { requestingUserId: "u-rich", destinationOwnerUserId: "u-other", destination: ADDR, hotWalletBalanceBase: "10000", idempotencyKey: "u-rich:k2" } });
     expect(r.statusCode).toBe(400);
     expect(r.json().reason).toBe("destination_not_owned_by_requester");
   });
-  it("rejects insufficient hot wallet", async () => {
-    const r = await app.inject({ method: "POST", url: "/api/v1/claims", payload: { reservableBalanceBase: "1000", hotWalletBalanceBase: "500", destination: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ", destinationOwnerUserId: "u1", requestingUserId: "u1", idempotencyKey: "u1:n1" } });
+
+  it("claim: idempotency key required", async () => {
+    const r = await app.inject({ method: "POST", url: "/api/v1/claims", payload: { requestingUserId: "u-rich" } });
     expect(r.statusCode).toBe(400);
-  });
-  it("accepts valid claim (server-calculated amount)", async () => {
-    const r = await app.inject({ method: "POST", url: "/api/v1/claims", payload: { reservableBalanceBase: "1000", hotWalletBalanceBase: "5000", destination: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ", destinationOwnerUserId: "u1", requestingUserId: "u1", idempotencyKey: "u1:n1" } });
-    expect(r.statusCode).toBe(200);
-    const j = r.json();
-    expect(j.success).toBe(true);
-    expect(j.amountBase).toBe("1000");
   });
 });

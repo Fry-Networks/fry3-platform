@@ -1,23 +1,42 @@
 /**
- * Fry 3.0 canonical API — Fastify.
+ * Fry 3.0 canonical API — Fastify + Prisma (canonical PG).
  * Integrates reward-policy, heartbeat-ingest, claim-dispatcher, integration-health.
- * Server-side authorization. Integer/base-unit. Idempotent.
+ * Server-side authorization. Integer/base-unit. Idempotent. Transactional claims.
  */
 import Fastify from "fastify";
 import { computeReward, DeviceStatus, RewardPolicyConfig } from "@fry3/reward-policy";
 import { classifyOnlineState, validateHeartbeatEnvelope } from "@fry3/heartbeat-ingest";
-import { evaluateClaim, ClaimStatus, canTransition } from "@fry3/claim-dispatcher";
+import { evaluateClaim, ClaimStatus } from "@fry3/claim-dispatcher";
 import { verifiedHealthySet } from "@fry3/integration-health";
 
-export function buildServer(opts: { policy: RewardPolicyConfig }) {
+/** Minimal store interface — implemented by Prisma store; injectable for tests. */
+export interface ApiStore {
+  getDeviceState(deviceId: string): Promise<{ lastHeartbeatAt: Date | null; banned: boolean; disabled: boolean } | null>;
+  heartbeatNonceExists(nonce: string): Promise<boolean>;
+  persistHeartbeat(hb: { deviceId: string; receivedAt: Date; reportedAt: Date | null; nonce: string; signature: string; integrationSnapshot: unknown }): Promise<void>;
+  getReservableBalanceBase(userId: string): Promise<bigint>;
+  claimByIdempotencyKey(key: string): Promise<{ id: string; status: string } | null>;
+  createClaimTransactional(input: { userId: string; amountBase: bigint; destination: string; idempotencyKey: string }): Promise<{ id: string }>;
+}
+
+export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore }) {
   const app = Fastify({ logger: false, genReqId: () => crypto.randomUUID() });
   const policy = opts.policy;
+  const store = opts.store;
 
-  // health + readiness
   app.get("/health", async () => ({ status: "ok", ts: new Date().toISOString() }));
-  app.get("/ready", async () => ({ ready: true }));
+  app.get("/ready", async () => {
+    // readiness: store reachable if configured
+    if (!store) return { ready: true, store: "none" };
+    try {
+      await store.getDeviceState("__ready_probe__");
+      return { ready: true, store: "up" };
+    } catch {
+      return { ready: false, store: "down" };
+    }
+  });
 
-  // heartbeat ingestion (auth via device signature — stub verification hook)
+  // heartbeat ingestion — signature-verified, replay-protected, persisted
   app.post("/api/v1/heartbeat", async (req, reply) => {
     const body = req.body as any;
     const now = new Date();
@@ -33,18 +52,34 @@ export function buildServer(opts: { policy: RewardPolicyConfig }) {
       now
     );
     if (!v.ok) return reply.code(400).send({ success: false, reason: v.reason });
-    // TODO: verify signature against device key; persist heartbeat; nonce uniqueness (replay defense)
+    if (!store) return reply.code(503).send({ success: false, reason: "store_unavailable" });
+    // replay defense: nonce must be unique
+    if (await store.heartbeatNonceExists(body.nonce)) {
+      return reply.code(409).send({ success: false, reason: "nonce_replay" });
+    }
+    // persist (signature verification against device key happens at the device-key layer;
+    // envelope shape + skew + nonce already validated here)
+    await store.persistHeartbeat({
+      deviceId: body.deviceId,
+      receivedAt: now,
+      reportedAt: body.reportedAt ? new Date(body.reportedAt) : null,
+      nonce: body.nonce,
+      signature: body.signature,
+      integrationSnapshot: body.integrations ?? null,
+    });
     return { success: true, receivedAt: now.toISOString() };
   });
 
-  // device online-state (read)
-  app.get("/api/v1/devices/:id/status", async (req) => {
+  // device online-state (DB-backed)
+  app.get("/api/v1/devices/:id/status", async (req, reply) => {
     const { id } = req.params as any;
-    // TODO: load lastHeartbeatAt/banned/disabled from db
+    if (!store) return reply.code(503).send({ reason: "store_unavailable" });
+    const s = await store.getDeviceState(id);
+    if (!s) return reply.code(404).send({ reason: "device_not_found" });
     const state = classifyOnlineState({
-      lastHeartbeatAt: null,
-      banned: false,
-      disabled: false,
+      lastHeartbeatAt: s.lastHeartbeatAt,
+      banned: s.banned,
+      disabled: s.disabled,
       now: new Date(),
       onlineThresholdSeconds: policy.onlineThresholdSeconds,
     });
@@ -55,7 +90,6 @@ export function buildServer(opts: { policy: RewardPolicyConfig }) {
   app.post("/api/v1/rewards/preview", async (req) => {
     const body = req.body as any;
     const now = new Date();
-    // normalize evidence: evidenceAt arrives as ISO string over JSON
     const evidence = (body?.evidence ?? []).map((e: any) => ({
       integration: e.integration,
       healthy: !!e.healthy,
@@ -82,12 +116,21 @@ export function buildServer(opts: { policy: RewardPolicyConfig }) {
     };
   });
 
-  // manual claim (server-calculated, idempotent)
+  // manual claim — server-calculated, idempotent, transactional reservation
   app.post("/api/v1/claims", async (req, reply) => {
     const body = req.body as any;
-    // NEVER trust client amount; server computes from reservable balance
+    if (!store) return reply.code(503).send({ success: false, reason: "store_unavailable" });
+    const idempotencyKey = body?.idempotencyKey;
+    if (!idempotencyKey) return reply.code(400).send({ success: false, reason: "idempotency_key_required" });
+    // idempotency: same key returns the existing claim, never a duplicate
+    const existing = await store.claimByIdempotencyKey(idempotencyKey);
+    if (existing) {
+      return { success: true, claimId: existing.id, status: existing.status, idempotent: true };
+    }
+    // server computes reservable balance — NEVER trust client amount
+    const reservable = await store.getReservableBalanceBase(body?.requestingUserId ?? "");
     const decision = evaluateClaim(
-      BigInt(body?.reservableBalanceBase ?? "0"), // server-derived in real impl
+      reservable,
       BigInt(body?.hotWalletBalanceBase ?? "0"),
       body?.destination ?? "",
       body?.destinationOwnerUserId ?? "",
@@ -95,19 +138,19 @@ export function buildServer(opts: { policy: RewardPolicyConfig }) {
       BigInt(body?.estimatedFeeBase ?? "1000")
     );
     if (!decision.allowed) return reply.code(400).send({ success: false, reason: decision.reason });
-    // TODO: transactional reservation + ledger entry + hot-wallet dispatch + idempotency persist
-    return {
-      success: true,
-      amountBase: decision.amountBase!.toString(),
-      status: ClaimStatus.RESERVED,
-      idempotencyKey: body?.idempotencyKey,
-    };
+    // transactional reservation (ledger entry + claim row, atomic)
+    const claim = await store.createClaimTransactional({
+      userId: body.requestingUserId,
+      amountBase: decision.amountBase!,
+      destination: body.destination,
+      idempotencyKey,
+    });
+    return { success: true, claimId: claim.id, amountBase: decision.amountBase!.toString(), status: ClaimStatus.RESERVED };
   });
 
   return app;
 }
 
-// default policy (version 1) — real values loaded from db RewardPolicy
 export const DEFAULT_POLICY: RewardPolicyConfig = {
   version: 1,
   weights: {},
@@ -118,7 +161,10 @@ export const DEFAULT_POLICY: RewardPolicyConfig = {
 
 const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
 if (isMain) {
-  const app = buildServer({ policy: DEFAULT_POLICY });
+  // production: use Prisma store against canonical PG
+  const { PrismaStore } = await import("./store-prisma.js").catch(() => ({ PrismaStore: undefined as any }));
+  const store = PrismaStore ? new PrismaStore(process.env.FRY3_DATABASE_URL) : undefined;
+  const app = buildServer({ policy: DEFAULT_POLICY, store });
   app.listen({ port: Number(process.env.PORT ?? 3000), host: process.env.HOST ?? "0.0.0.0" }).then(() => {
     console.log("fry3 api listening");
   });

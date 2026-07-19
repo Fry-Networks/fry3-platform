@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@prisma/client": "^7.8.0",
     "fastify": "^4.28.0"
   },
   "devDependencies": {
