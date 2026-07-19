@@ -32,7 +32,7 @@ services:
     container_name: fry3-web
     networks: [fry3-net]
     ports:
-      - "127.0.0.1:3100:3000"
+      - "127.0.0.1:3100:80"
     restart: unless-stopped
 
   dashboard:
@@ -45,4 +45,54 @@ services:
       NEXT_PUBLIC_FRY3_API: http://fry3-api:3000
     ports:
       - "127.0.0.1:3101:3000"
+    restart: unless-stopped
+
+  explorer:
+    build:
+      context: ../../apps/explorer
+      dockerfile: ../../infra/docker/nextapp.Dockerfile
+    container_name: fry3-explorer
+    networks: [fry3-net]
+    ports:
+      - "127.0.0.1:3102:3000"
+    restart: unless-stopped
+
+  vote:
+    build:
+      context: ../../apps/vote
+      dockerfile: ../../infra/docker/nextapp.Dockerfile
+    container_name: fry3-vote
+    networks: [fry3-net]
+    ports:
+      - "127.0.0.1:3103:3000"
+    restart: unless-stopped
+
+  byod:
+    build:
+      context: ../../apps/byod
+      dockerfile: ../../infra/docker/nextapp.Dockerfile
+    container_name: fry3-byod
+    networks: [fry3-net]
+    ports:
+      - "127.0.0.1:3104:3000"
+    restart: unless-stopped
+
+  helpdesk-web:
+    build:
+      context: ../../apps/helpdesk-web
+      dockerfile: ../../infra/docker/nextapp.Dockerfile
+    container_name: fry3-helpdesk-web
+    networks: [fry3-net]
+    ports:
+      - "127.0.0.1:3105:3000"
+    restart: unless-stopped
+
+  timeclock:
+    build:
+      context: ../../apps/timeclock
+      dockerfile: ../../infra/docker/nextapp.Dockerfile
+    container_name: fry3-timeclock
+    networks: [fry3-net]
+    ports:
+      - "127.0.0.1:3106:3000"
     restart: unless-stopped
