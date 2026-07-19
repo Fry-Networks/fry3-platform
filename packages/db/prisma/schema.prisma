@@ -1,0 +1,401 @@
+// Fry Networks 3.0 — Canonical Prisma schema
+// One source of truth per business entity. Integer/base-unit arithmetic only.
+// timestamptz everywhere. Idempotency keys. Immutable ledger.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("FRY3_DATABASE_URL")
+}
+
+// ---------- Identity / Auth ----------
+model User {
+  id            String   @id @default(uuid())
+  primaryEmail  String?  @unique
+  displayName   String?
+  status        UserStatus @default(ACTIVE)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  wallets       Wallet[]
+  sessions      Session[]
+  devices       Device[]
+  claims        Claim[]
+  byodLicenses  ByodLicense[]
+  votes         Vote[]
+  discordIdentity DiscordIdentity?
+  auditEvents   AuditEvent[]
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+  DELETED
+}
+
+model Wallet {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  address     String   @unique // Algorand address (58 chars)
+  verified    Boolean  @default(false)
+  verifiedAt  DateTime?
+  isPrimary   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  devices     Device[]
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  tokenHash    String   @unique
+  ip           String?
+  userAgent    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  revokedAt    DateTime?
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ---------- Devices / FEM ----------
+model Device {
+  id              String   @id @default(uuid())
+  ownerUserId     String
+  owner           User     @relation(fields: [ownerUserId], references: [id])
+  walletId        String?
+  wallet          Wallet?  @relation(fields: [walletId], references: [id])
+  canonicalId     String   @unique // canonical device identity (hardware-derived)
+  minerKey        String?  @unique
+  label           String?
+  status          DeviceStatus @default(OFFLINE)
+  banned          Boolean  @default(false)
+  disabledAt      DateTime?
+  lastSeenAt      DateTime?
+  lastHeartbeatAt DateTime?
+  explorerVisible Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  femInstances    FemInstance[]
+  heartbeats      Heartbeat[]
+  integrations    IntegrationHealth[]
+  rewardAccruals  RewardAccrual[]
+  @@index([ownerUserId])
+  @@index([status])
+  @@index([lastSeenAt])
+}
+
+enum DeviceStatus {
+  ONLINE
+  DEGRADED
+  OFFLINE
+  DISABLED
+  BANNED
+}
+
+model FemInstance {
+  id          String   @id @default(uuid())
+  deviceId    String
+  device      Device   @relation(fields: [deviceId], references: [id])
+  version     String?
+  instanceKey String   @unique
+  registeredAt DateTime @default(now())
+  lastSeenAt  DateTime?
+  @@index([deviceId])
+}
+
+model Heartbeat {
+  id          String   @id @default(uuid())
+  deviceId    String
+  device      Device   @relation(fields: [deviceId], references: [id])
+  receivedAt  DateTime @default(now()) // server time — authoritative
+  reportedAt  DateTime? // client-reported (untrusted, for skew analysis)
+  nonce       String   @unique // replay defense
+  signature   String
+  payloadHash String?
+  integrationSnapshot Json? // claimed integration states (verified separately)
+  @@index([deviceId, receivedAt])
+  @@index([receivedAt])
+}
+
+// ---------- Integrations ----------
+model IntegrationHealth {
+  id            String   @id @default(uuid())
+  deviceId      String
+  device        Device   @relation(fields: [deviceId], references: [id])
+  integration   IntegrationKind
+  healthy       Boolean
+  evidenceAt    DateTime // when the health evidence was observed (server time)
+  evidenceType  String   // telemetry|heartbeat-claim|probe
+  details       Json?
+  createdAt     DateTime @default(now())
+  @@unique([deviceId, integration])
+  @@index([deviceId])
+}
+
+enum IntegrationKind {
+  STORJ
+  SPACE_ACRES
+  BANDWIDTH
+  COMPUTE
+  SENSOR_WEATHER
+  SENSOR_AIR
+  SENSOR_WATER
+  SENSOR_RADIATION
+  SENSOR_ENERGY
+  CAMERA
+  OTHER
+}
+
+// ---------- Reward policy / ledger ----------
+model RewardPolicy {
+  id             String   @id @default(uuid())
+  version        Int      @unique
+  effectiveFrom  DateTime
+  effectiveTo    DateTime?
+  // per-integration weight in FRY3.0 base units per qualifying interval
+  weights        Json     // { "STORJ": "x", "SPACE_ACRES": "y", ... }
+  storageCapabilityWeight String // weight for storage_capability (storj OR space_acres, counted once)
+  onlineThresholdSeconds Int @default(300)
+  intervalSeconds Int    @default(3600)
+  createdAt      DateTime @default(now())
+  accruals       RewardAccrual[]
+}
+
+model RewardAccrual {
+  id             String   @id @default(uuid())
+  deviceId       String
+  device         Device   @relation(fields: [deviceId], references: [id])
+  policyId       String
+  policy         RewardPolicy @relation(fields: [policyId], references: [id])
+  intervalStart  DateTime
+  intervalEnd    DateTime
+  amountBase     String   // integer base units as string (no float)
+  storageCapabilityCounted Boolean @default(false)
+  integrationsCounted Json  // list of integrations counted this interval
+  eligible       Boolean
+  ineligibleReason String?
+  idempotencyKey String   @unique // deviceId+intervalStart+policyVersion
+  createdAt      DateTime @default(now())
+  ledgerEntries  RewardLedgerEntry[]
+  @@unique([deviceId, intervalStart, policyId])
+  @@index([deviceId])
+  @@index([intervalStart])
+}
+
+model RewardLedgerEntry {
+  id          String   @id @default(uuid())
+  accrualId   String
+  accrual     RewardAccrual @relation(fields: [accrualId], references: [id])
+  entryType   LedgerEntryType // ACCRUE | CLAIM_RESERVE | CLAIM_PAID | CLAIM_FAILED_RELEASE | ADJUST
+  amountBase  String   // signed integer base units as string
+  balanceAfter String  // running balance in base units (string)
+  refId       String?  // claim id / txid / admin note
+  idempotencyKey String @unique
+  createdAt   DateTime @default(now())
+  @@index([accrualId])
+}
+
+enum LedgerEntryType {
+  ACCRUE
+  CLAIM_RESERVE
+  CLAIM_PAID
+  CLAIM_FAILED_RELEASE
+  ADJUST
+}
+
+// ---------- Claims ----------
+model Claim {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  amountBase     String   // server-calculated, integer base units
+  status         ClaimStatus @default(PENDING)
+  idempotencyKey String   @unique
+  assetId        String   @default("3612979527") // FRY 3.0 ASA
+  destination    String   // wallet address
+  txId           String?
+  failureReason  String?
+  reservedAt     DateTime?
+  dispatchedAt   DateTime?
+  confirmedAt    DateTime?
+  reconciledAt   DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  @@index([userId])
+  @@index([status])
+}
+
+enum ClaimStatus {
+  PENDING
+  RESERVED
+  DISPATCHED
+  CONFIRMED
+  FAILED
+  RECONCILED
+}
+
+// ---------- BYOD ----------
+model ByodLicense {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  licenseKey  String   @unique
+  deviceId    String?
+  status      ByodStatus @default(ACTIVE)
+  activatedAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+  @@index([userId])
+}
+
+enum ByodStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+// ---------- Voting ----------
+model Proposal {
+  id          String   @id @default(uuid())
+  externalId  String?  @unique // on-chain app/box ref (read-only)
+  title       String
+  body        String?
+  opensAt     DateTime
+  closesAt    DateTime
+  status      ProposalStatus @default(OPEN)
+  createdAt   DateTime @default(now())
+  votes       Vote[]
+}
+
+enum ProposalStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  TALLIED
+}
+
+model Vote {
+  id          String   @id @default(uuid())
+  proposalId  String
+  proposal    Proposal @relation(fields: [proposalId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  walletAddress String
+  choice      String
+  weightBase  String   @default("0")
+  signature   String
+  castAt      DateTime @default(now())
+  @@unique([proposalId, walletAddress]) // one vote per wallet per proposal
+  @@index([proposalId])
+}
+
+// ---------- Discord / Helpdesk ----------
+model DiscordIdentity {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  discordId   String   @unique
+  username    String?
+  linkedAt    DateTime @default(now())
+}
+
+model HelpdeskTicket {
+  id          String   @id @default(uuid())
+  discordId   String?
+  subject     String
+  status      TicketStatus @default(OPEN)
+  channelId   String?  @unique
+  createdById String?
+  createdAt   DateTime @default(now())
+  closedAt    DateTime?
+  messages    HelpdeskMessage[]
+  @@index([status])
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  CLOSED
+}
+
+model HelpdeskMessage {
+  id        String   @id @default(uuid())
+  ticketId  String
+  ticket    HelpdeskTicket @relation(fields: [ticketId], references: [id])
+  authorId  String
+  body      String
+  isStaff   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  @@index([ticketId])
+}
+
+// ---------- Timeclock ----------
+model TimeclockEntry {
+  id        String   @id @default(uuid())
+  workerId  String
+  clockInAt DateTime
+  clockOutAt DateTime?
+  source    String?
+  meta      Json?
+  createdAt DateTime @default(now())
+  @@index([workerId])
+  @@index([clockInAt])
+}
+
+// ---------- Bridge ----------
+model BridgeEvent {
+  id          String   @id @default(uuid())
+  direction   String   // lock|mint|burn|release
+  sourceTxId  String?  @unique
+  destTxId    String?
+  amountBase  String
+  assetRef    String
+  status      BridgeStatus @default(OBSERVED)
+  observedAt  DateTime @default(now())
+  completedAt DateTime?
+  @@index([status])
+}
+
+enum BridgeStatus {
+  OBSERVED
+  RELAYED
+  CONFIRMED
+  FAILED
+}
+
+// ---------- Audit ----------
+model AuditEvent {
+  id        String   @id @default(uuid())
+  actorUserId String?
+  actor     User?    @relation(fields: [actorUserId], references: [id])
+  action    String
+  targetType String?
+  targetId  String?
+  meta      Json?
+  ip        String?
+  createdAt DateTime @default(now())
+  @@index([actorUserId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// ---------- Migration provenance ----------
+model MigrationProvenance {
+  id          String   @id @default(uuid())
+  sourceEngine String  // mongodb|mariadb
+  sourceDb    String
+  sourceCollection String
+  sourceId    String
+  targetTable String
+  targetId    String
+  migratedAt  DateTime @default(now())
+  batchId     String
+  @@unique([sourceDb, sourceCollection, sourceId])
+  @@index([batchId])
+}

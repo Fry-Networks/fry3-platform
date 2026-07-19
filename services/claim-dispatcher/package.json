@@ -1,0 +1,8 @@
+{
+  "name": "@fry3/claim-dispatcher",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "vitest run", "build": "tsc -p tsconfig.json", "lint": "echo lint-skip", "typecheck": "tsc --noEmit -p tsconfig.json" },
+  "devDependencies": { "typescript": "^5.5.0", "vitest": "^2.0.0" }
+}
