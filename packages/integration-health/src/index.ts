@@ -38,7 +38,8 @@ export function effectiveHealth(
 export function verifiedHealthySet(
   evidenceList: HealthEvidence[],
   now: Date,
-  maxAgeSeconds = 600
+  maxAgeSeconds = 600,
+  maxAgeSecondsPerKind?: Partial<Record<IntegrationKind, number>>
 ): Set<IntegrationKind> {
   const set = new Set<IntegrationKind>();
   // keep the most recent evidence per integration
@@ -48,7 +49,40 @@ export function verifiedHealthySet(
     if (!cur || e.evidenceAt > cur.evidenceAt) latest.set(e.integration, e);
   }
   for (const [kind, e] of latest) {
-    if (effectiveHealth(e, now, maxAgeSeconds).healthy) set.add(kind);
+    const kindWindow = maxAgeSecondsPerKind?.[kind] ?? maxAgeSeconds;
+    if (effectiveHealth(e, now, kindWindow).healthy) set.add(kind);
   }
   return set;
+}
+
+/**
+ * Storage-slot daily attestation window (Fry 3.0 rule): storj ⇄ space_acres is
+ * ONE storage slot satisfied by a SINGLE daily attestation — 1 slot/day, not
+ * 144. Binary 100%/0%: a missing/stale/unhealthy attestation loses the slot
+ * entirely (ineligibility), never a fractional reduction. Absence of the other
+ * provider is never a penalty (OR-substitution lives in reward-policy).
+ */
+export const STORAGE_ATTESTATION_MAX_AGE_SECONDS = 86400;
+
+/** Per-kind freshness map giving the storage slot its daily-attestation window. */
+export function storageSlotMaxAges(
+  storageWindowSeconds = STORAGE_ATTESTATION_MAX_AGE_SECONDS
+): Partial<Record<IntegrationKind, number>> {
+  return {
+    [IntegrationKind.STORJ]: storageWindowSeconds,
+    [IntegrationKind.SPACE_ACRES]: storageWindowSeconds,
+  };
+}
+
+/**
+ * Verified-healthy set with storage-slot daily-attestation semantics — the
+ * canonical evidence step for the Fry 3.0 forward reward path.
+ */
+export function verifiedHealthySetWithStorageSlot(
+  evidenceList: HealthEvidence[],
+  now: Date,
+  maxAgeSeconds = 600,
+  storageWindowSeconds = STORAGE_ATTESTATION_MAX_AGE_SECONDS
+): Set<IntegrationKind> {
+  return verifiedHealthySet(evidenceList, now, maxAgeSeconds, storageSlotMaxAges(storageWindowSeconds));
 }

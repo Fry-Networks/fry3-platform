@@ -6,8 +6,6 @@
 **/*.log
 **/.env
 **/.env.*
-**/*.test.ts
-**/test
 **/coverage
 **/.dockerignore
 **/Dockerfile

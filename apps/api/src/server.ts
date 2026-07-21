@@ -7,7 +7,9 @@ import Fastify from "fastify";
 import { computeReward, DeviceStatus, RewardPolicyConfig } from "@fry3/reward-policy";
 import { classifyOnlineState, validateHeartbeatEnvelope } from "@fry3/heartbeat-ingest";
 import { evaluateClaim, ClaimStatus } from "@fry3/claim-dispatcher";
-import { verifiedHealthySet } from "@fry3/integration-health";
+import { verifiedHealthySetWithStorageSlot } from "@fry3/integration-health";
+import { registerLegacyTelemetry } from "./legacy-telemetry.js";
+import { registerByod } from "./byod.js";
 
 /** Minimal store interface — implemented by Prisma store; injectable for tests. */
 export interface ApiStore {
@@ -17,6 +19,10 @@ export interface ApiStore {
   getReservableBalanceBase(userId: string): Promise<bigint>;
   claimByIdempotencyKey(key: string): Promise<{ id: string; status: string } | null>;
   createClaimTransactional(input: { userId: string; amountBase: bigint; destination: string; idempotencyKey: string }): Promise<{ id: string }>;
+  legacyInstallationHeartbeat?(input: { minerKey: string; installId: string; version: string | null; body: unknown; now: Date; deviceTokenHash?: string | null }): Promise<{ ok: true } | { ok: false; reason: string }>;
+  legacyMeasurement?(input: { hexId: string; minerCode: string | null; installId: string | null; measurementType: string | null; integration: string; timestamp: Date | null; value: unknown; now: Date }): Promise<{ ok: true } | { ok: false; reason: string }>;
+  byodLicenseLookup?(licenseKey: string): Promise<null | { status: string; activatedAt: Date | null; expiresAt: Date | null; createdAt: Date; device: null | { id: string; label: string | null; lastHeartbeatAt: Date | null; banned: boolean; disabled: boolean } }>;
+  byodActivate?(input: { licenseKey: string; deviceRef: string; now: Date }): Promise<{ ok: true; deviceId: string; activatedAt: Date; idempotent?: boolean } | { ok: false; code: number; reason: string }>;
 }
 
 export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore }) {
@@ -24,7 +30,9 @@ export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore
   const policy = opts.policy;
   const store = opts.store;
 
-  app.get("/health", async () => ({ status: "ok", ts: new Date().toISOString() }));
+  // superset shape: {status,ts} for new-stack probes + {ok,pid,port,time} for frozen
+  // hardwareapi /health consumers (frozen shape proven at P7.1)
+  app.get("/health", async () => ({ status: "ok", ts: new Date().toISOString(), ok: true, pid: process.pid, port: Number(process.env.PORT ?? 3000), time: new Date().toISOString() }));
   app.get("/ready", async () => {
     // readiness: store reachable if configured
     if (!store) return { ready: true, store: "none" };
@@ -96,7 +104,7 @@ export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore
       evidenceAt: e.evidenceAt ? new Date(e.evidenceAt) : now,
       evidenceType: e.evidenceType ?? "telemetry",
     }));
-    const healthy = verifiedHealthySet(evidence, now);
+    const healthy = verifiedHealthySetWithStorageSlot(evidence, now, 600, policy.storageAttestationMaxAgeSeconds);
     const result = computeReward(
       {
         deviceId: body?.deviceId ?? "unknown",
@@ -184,6 +192,9 @@ export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore
     if (!c) return reply.code(404).send({ reason: "claim_not_found" });
     return c;
   });
+
+  registerLegacyTelemetry(app, store);
+  registerByod(app, store, policy);
 
   return app;
 }

@@ -105,6 +105,7 @@ model FemInstance {
   device      Device   @relation(fields: [deviceId], references: [id])
   version     String?
   instanceKey String   @unique
+  deviceTokenHash String? // sha256 of the FEM device token (rotated on every legacy heartbeat — frozen contract, P7.1)
   registeredAt DateTime @default(now())
   lastSeenAt  DateTime?
   @@index([deviceId])
@@ -191,8 +192,8 @@ model RewardAccrual {
 
 model RewardLedgerEntry {
   id          String   @id @default(uuid())
-  accrualId   String
-  accrual     RewardAccrual @relation(fields: [accrualId], references: [id])
+  accrualId   String?  // null for claim-lifecycle entries (CLAIM_RESERVE/PAID/FAILED_RELEASE reference the claim via refId)
+  accrual     RewardAccrual? @relation(fields: [accrualId], references: [id])
   entryType   LedgerEntryType // ACCRUE | CLAIM_RESERVE | CLAIM_PAID | CLAIM_FAILED_RELEASE | ADJUST
   amountBase  String   // signed integer base units as string
   balanceAfter String  // running balance in base units (string)
@@ -399,4 +400,30 @@ model MigrationProvenance {
   batchId     String
   @@unique([sourceDb, sourceCollection, sourceId])
   @@index([batchId])
+}
+
+// ---------- Legacy weekly rewards (P5.6 migration; read-model) ----------
+// Verbatim per-entry mirror of Mongo main.device-rewards weekly_rewards[]
+// (unwound), loaded additively by the P5.6 migration. seq preserves natural
+// collection order — the legacy payout recompute (reward-engine
+// legacy-payout.ts) depends on accumulation order for base-unit exactness.
+// Table + indexes were created by hand-applied DDL; lwr_unlock_idx is a
+// partial index (WHERE unlock_is_date) which Prisma cannot express — do not
+// generate migrations from this model.
+model LegacyWeeklyReward {
+  seq            BigInt    @id
+  docId          String    @map("doc_id")
+  minerKey       String?   @map("miner_key")
+  entryIdx       Int       @map("entry_idx")
+  unlockAt       DateTime? @map("unlock_at")
+  unlockAtRaw    String?   @map("unlock_at_raw")
+  unlockIsDate   Boolean   @map("unlock_is_date")
+  status         String?
+  assetId        String?   @map("asset_id")
+  amountRaw      Float?    @map("amount_raw")
+  txId           String?   @map("tx_id")
+  resolvedWallet String?   @map("resolved_wallet")
+  provenance     Json
+  @@index([resolvedWallet], map: "lwr_wallet_idx")
+  @@map("legacy_weekly_rewards")
 }

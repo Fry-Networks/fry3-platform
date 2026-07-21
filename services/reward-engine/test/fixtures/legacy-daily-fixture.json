@@ -1,0 +1,1435 @@
+{
+ "verifyDate": "2026-07-16",
+ "asset": "2485202024",
+ "product": {
+  "verified": 22.89,
+  "tokensReward": "2485202024",
+  "tokensRegister": "none",
+  "tokensNode": null
+ },
+ "tiers": {
+  "FEM": {
+   "unregistered": 0,
+   "none": 1,
+   "24h": 1.5,
+   "6mo": 3
+  },
+  "STO": {
+   "unregistered": 0,
+   "none": 1,
+   "24h": 1.5,
+   "6mo": 3
+  },
+  "DVN": {
+   "unregistered": 0,
+   "none": 1,
+   "24h": 1.5,
+   "6mo": 3
+  }
+ },
+ "devices": [
+  {
+   "minerKey": "FEM-BCAE8D7D6C32F25B1BC642AA55C35CA3",
+   "recordedAmount": 0,
+   "createdAtMs": 1784261705244,
+   "device": {
+    "createdAtMs": 1721039665685,
+    "staked": {
+     "type": null,
+     "timeMs": 1734215546197,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-EF643026CF94EEBDF85E44453A4C7BF2",
+   "recordedAmount": 0,
+   "createdAtMs": 1784330109818,
+   "device": {
+    "createdAtMs": 1720976546552,
+    "staked": {
+     "type": "two",
+     "timeMs": 1727831293748,
+     "amount": 12500,
+     "asset_id": null
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-1613A680C274C2DF2608B9AB4A408F6C",
+   "recordedAmount": 0,
+   "createdAtMs": 1784286907560,
+   "device": {
+    "createdAtMs": 1721039665714,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734823861583,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-B50A0E368AB475AD56D1E51A8568C3B9",
+   "recordedAmount": 0,
+   "createdAtMs": 1784322909636,
+   "device": {
+    "createdAtMs": 1721039665683,
+    "staked": {
+     "type": "two",
+     "timeMs": 1766450604139,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-AC431FC1E6F9B8FEAD4D1C3E7674B92E",
+   "recordedAmount": 0,
+   "createdAtMs": 1784272506187,
+   "device": {
+    "createdAtMs": 1720976546626,
+    "staked": {
+     "type": "two",
+     "timeMs": 1765288633390,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-F7FEAA8EB2415872361FF4D6888DBA56",
+   "recordedAmount": 0,
+   "createdAtMs": 1784265305178,
+   "device": {
+    "createdAtMs": 1721039665481,
+    "staked": {
+     "type": "two",
+     "timeMs": 1767233443941,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-8B710D3EE9C5EE813ADE33C71169062A",
+   "recordedAmount": 0,
+   "createdAtMs": 1784304908402,
+   "device": {
+    "createdAtMs": 1721039665463,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734817680432,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-122C92DEB40F3C9BC0D7D4DA41A6317D",
+   "recordedAmount": 0,
+   "createdAtMs": 1784279706879,
+   "device": {
+    "createdAtMs": 1720976546761,
+    "staked": {
+     "type": "two",
+     "timeMs": 1765279347951,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-2F638D1A3AB9DF5B37DE172D17C5167A",
+   "recordedAmount": 0,
+   "createdAtMs": 1784286906751,
+   "device": {
+    "createdAtMs": 1720976546683,
+    "staked": {
+     "type": "two",
+     "timeMs": 1729556326037,
+     "amount": 12500,
+     "asset_id": null
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-337D9C6E71A2A95D453AB2B82DF50ADD",
+   "recordedAmount": 0,
+   "createdAtMs": 1784286908783,
+   "device": {
+    "createdAtMs": 1727077880577,
+    "staked": {
+     "type": "one",
+     "timeMs": 1737618801092,
+     "amount": 12500,
+     "asset_id": null
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 33,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-F4648E7E69BDF028F532ADDB2433F853",
+   "recordedAmount": 0,
+   "createdAtMs": 1784286907560,
+   "device": {
+    "createdAtMs": 1721147676402,
+    "staked": {
+     "type": "two",
+     "timeMs": 1737618715499,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-05669EAC489459F7EEC7CE449067A7B5",
+   "recordedAmount": 0,
+   "createdAtMs": 1784330110240,
+   "device": {
+    "createdAtMs": 1721039665480,
+    "staked": {
+     "type": "two",
+     "timeMs": 1763345578976,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-1C81B6A82249D959F7A8C32C23A13B4E",
+   "recordedAmount": 0,
+   "createdAtMs": 1784268906325,
+   "device": {
+    "createdAtMs": 1721039665666,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734368392858,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-D1A6170F38520B4C21725311B7930396",
+   "recordedAmount": 0,
+   "createdAtMs": 1784294110309,
+   "device": {
+    "createdAtMs": 1728228579820,
+    "staked": {
+     "type": "two",
+     "timeMs": 1764338612059,
+     "amount": 93.25,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 32,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-4A95F20D971125DF8FD8FE8108E91D26",
+   "recordedAmount": 0,
+   "createdAtMs": 1784330110240,
+   "device": {
+    "createdAtMs": 1720976546734,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734180081590,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-6C317765E552F3EB625B782C529845F7",
+   "recordedAmount": 0,
+   "createdAtMs": 1784312109534,
+   "device": {
+    "createdAtMs": 1722077048240,
+    "staked": {
+     "type": "two",
+     "timeMs": 1738205403707,
+     "amount": 6250,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 32,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-917E351156CD699651C6427BBD8173F0",
+   "recordedAmount": 0,
+   "createdAtMs": 1784312111174,
+   "device": {
+    "createdAtMs": 1727349664973,
+    "staked": {
+     "type": "two",
+     "timeMs": 1765228426129,
+     "amount": 93.25,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 31,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-D861F5EF893164DB5F68338A62975A1C",
+   "recordedAmount": 0,
+   "createdAtMs": 1784315710926,
+   "device": {
+    "createdAtMs": 1727087271524,
+    "staked": {
+     "type": null,
+     "timeMs": null,
+     "amount": null,
+     "asset_id": null
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 31,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-C20F8FB53F0AA769993E7912858936C9",
+   "recordedAmount": 0,
+   "createdAtMs": 1784265305622,
+   "device": {
+    "createdAtMs": 1721039665673,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734209853421,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-3A82710A63DB1E89302D40CC135478B3",
+   "recordedAmount": 0,
+   "createdAtMs": 1784276106927,
+   "device": {
+    "createdAtMs": 1721039665673,
+    "staked": {
+     "type": "two",
+     "timeMs": 1740345159529,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-69DD545686C5CB69EA083DDFA1E4C69F",
+   "recordedAmount": 0,
+   "createdAtMs": 1784276106141,
+   "device": {
+    "createdAtMs": 1720976546624,
+    "staked": {
+     "type": "two",
+     "timeMs": 1764788710278,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-DCBE0A9FDBD58DC1E934039A76E3AFA8",
+   "recordedAmount": 0,
+   "createdAtMs": 1784250906102,
+   "device": {
+    "createdAtMs": 1724521281227,
+    "staked": {
+     "type": "two",
+     "timeMs": 1766142899586,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-454EF81A362154C73CC6925E6A28E50F",
+   "recordedAmount": 0,
+   "createdAtMs": 1784304907594,
+   "device": {
+    "createdAtMs": 1720976546512,
+    "staked": {
+     "type": "two",
+     "timeMs": 1737229948332,
+     "amount": 12500,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-6ECB937F4561E631A4413FFFD899612A",
+   "recordedAmount": 0,
+   "createdAtMs": 1784326509979,
+   "device": {
+    "createdAtMs": 1721039665683,
+    "staked": {
+     "type": "two",
+     "timeMs": 1767233501460,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-D3B849C0CD27D7F30F95FB2FA3244A84",
+   "recordedAmount": 0,
+   "createdAtMs": 1784319309949,
+   "device": {
+    "createdAtMs": 1722011902810,
+    "staked": {
+     "type": "two",
+     "timeMs": 1766143190698,
+     "amount": 186.5,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-CB5D3C4B3438497612E15872D34C2103",
+   "recordedAmount": 0,
+   "createdAtMs": 1784330114183,
+   "device": {
+    "createdAtMs": 1736825497385,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": 33,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-1D0197F0775F0371094CD4830E5996C5",
+   "recordedAmount": 0,
+   "createdAtMs": 1784247306595,
+   "device": {
+    "createdAtMs": 1727314853499,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734488937459,
+     "amount": 6250,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 32,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-D5377CD8755DA46BF27F8AF5C3A07613",
+   "recordedAmount": 0,
+   "createdAtMs": 1784272509108,
+   "device": {
+    "createdAtMs": 1727460554243,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734319788034,
+     "amount": 6250,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 30,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-E284EAE15E3AA6D3A727A30F10F27BAD",
+   "recordedAmount": 0,
+   "createdAtMs": 1784312111651,
+   "device": {
+    "createdAtMs": 1730283076627,
+    "staked": {
+     "type": "two",
+     "timeMs": 1734262380633,
+     "amount": 6250,
+     "asset_id": "924268058"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 32,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-4761118E9C7ACF2A6D242D30419C5747",
+   "recordedAmount": 0,
+   "createdAtMs": 1784301310704,
+   "device": {
+    "createdAtMs": 1745002445373,
+    "staked": {
+     "type": "two",
+     "timeMs": 1764868325781,
+     "amount": 93.25,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": 37,
+    "byodIsString": true,
+    "rewardWallet": "W",
+    "virtual": false,
+    "activated": false
+   },
+   "poc": {
+    "proportion": null,
+    "rewardEligible": null,
+    "day": null
+   }
+  },
+  {
+   "minerKey": "FEM-1F3E26C867D22AB60B35991EB0E8200B",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784175363692,
+   "device": {
+    "createdAtMs": 1778030130218,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-877C294C468327D637113F798903672C",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784182564506,
+   "device": {
+    "createdAtMs": 1778030133127,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-F3EE89EC9914FF32D31012F277378C83",
+   "recordedAmount": 68.67,
+   "createdAtMs": 1784189764968,
+   "device": {
+    "createdAtMs": 1778030121642,
+    "staked": {
+     "type": "two",
+     "timeMs": 1782084867332,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-856031EFAA978B31F174B9694A4DC633",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784160962797,
+   "device": {
+    "createdAtMs": 1778030127291,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-AA46A537C4DB6EAC12932CF2CB6F95C7",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784164562872,
+   "device": {
+    "createdAtMs": 1778030123948,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284663831,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-E62AD777ECCA476FEFD65C884C1232F2",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784168163588,
+   "device": {
+    "createdAtMs": 1778030123950,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284963310,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-4C1C288631C7873E55A586E943C204A2",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784168163588,
+   "device": {
+    "createdAtMs": 1778030128300,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-D23F16C35EAD63E33A57F7D2BD16CAA5",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784175363529,
+   "device": {
+    "createdAtMs": 1778030123949,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284947803,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-6EA1049D318FDC986FF942881F3906E2",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784175363529,
+   "device": {
+    "createdAtMs": 1778030127298,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-D6CC9462B1D26328455F6DF445841818",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784178963938,
+   "device": {
+    "createdAtMs": 1778030123948,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284650594,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-2A26B7C3827FCA97F172C9EB4C6E6E87",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784182564314,
+   "device": {
+    "createdAtMs": 1778030123949,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284927776,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-73915B3C496BF76E45BD8D62662D4E7E",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784182564314,
+   "device": {
+    "createdAtMs": 1778030127297,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-570E4894CFE2239BDAA9174ECD866BB3",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784186165069,
+   "device": {
+    "createdAtMs": 1778030123948,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284639423,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-481D83BBB17F9110753BAB87C16732D1",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784186165069,
+   "device": {
+    "createdAtMs": 1778030128304,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-D84608744857458A14928338F9D4267C",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784189764968,
+   "device": {
+    "createdAtMs": 1778030123948,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284693498,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-29F14DA31298D0CD89CC23623FF94545",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784193365339,
+   "device": {
+    "createdAtMs": 1778030123947,
+    "staked": {
+     "type": "two",
+     "timeMs": 1784284628947,
+     "amount": 143.44,
+     "asset_id": "2485314946"
+    },
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-F37589DC83B511B6A28441454D885EF8",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784193365339,
+   "device": {
+    "createdAtMs": 1778030127298,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-AFE391F7012A34D02D8DD30D070C7A1B",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784200565541,
+   "device": {
+    "createdAtMs": 1778030127298,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-63658417B8DAB1325E73C5AE54F751C8",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784240107698,
+   "device": {
+    "createdAtMs": 1778030123166,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-12764CF9812457252073BD83B734CF6B",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784171763705,
+   "device": {
+    "createdAtMs": 1778030123167,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-CC72AC81775A5313700EF82C06138429",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784178963938,
+   "device": {
+    "createdAtMs": 1778030123166,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-D1FE85CF0201943D0706812F26817CB5",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784186165069,
+   "device": {
+    "createdAtMs": 1778030129452,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-B0AEFDEE38BA4B891A37EF26C29E46ED",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784189764968,
+   "device": {
+    "createdAtMs": 1778030123160,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-731940F75D111818DCB95CC6D9313020",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784222106429,
+   "device": {
+    "createdAtMs": 1778030125702,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-F632BD12701EA0D2776AC969F2867C32",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784236507556,
+   "device": {
+    "createdAtMs": 1778030122388,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-59EDA5C53870957EDB6D742F9E8E0EA2",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784182564314,
+   "device": {
+    "createdAtMs": 1778030130971,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-97FD657CEECA425B4A3687E567828C62",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784189765169,
+   "device": {
+    "createdAtMs": 1778030127294,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-D4E2627F66F0F0248500D2EFF814D47A",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784240107862,
+   "device": {
+    "createdAtMs": 1778030128289,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-C7D7A5C7498A098F43721FE295A47652",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784171763887,
+   "device": {
+    "createdAtMs": 1778030132380,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-829BBF227F2DBA399076560FB47E8954",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784193365339,
+   "device": {
+    "createdAtMs": 1778030129448,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-FBF0C4C795D1206A987F81231B26751A",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784196965721,
+   "device": {
+    "createdAtMs": 1778030126549,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-6078A6E88EA4CBF9643A6DBE309AC4E3",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784232907413,
+   "device": {
+    "createdAtMs": 1778030123955,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-E1D4ED054CBE3647D3419050171E4055",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784240107698,
+   "device": {
+    "createdAtMs": 1778030123954,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-289B5C16F68770553078B0920DA734FD",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784160962797,
+   "device": {
+    "createdAtMs": 1778030123954,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  },
+  {
+   "minerKey": "FEM-0C06BEE4F604655E7B54FF248198CB91",
+   "recordedAmount": 22.89,
+   "createdAtMs": 1784189765169,
+   "device": {
+    "createdAtMs": 1778030126549,
+    "staked": null,
+    "registration": null,
+    "node": null,
+    "byodLen": null,
+    "byodIsString": false,
+    "rewardWallet": "W",
+    "virtual": true,
+    "activated": true
+   },
+   "poc": null
+  }
+ ]
+}

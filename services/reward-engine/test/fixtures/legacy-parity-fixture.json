@@ -1,0 +1,1493 @@
+{
+ "generated_from": "fry3 PG legacy_weekly_rewards extract (P5.6b pg_rows.tsv, parity-proven vs verbatim deployed weekly_publish.py GT 45/45 windows 0 diffs)",
+ "windows": {
+  "2026-07-17": {
+   "rows": [
+    {
+     "seq": 330026,
+     "ms": 1784246700000,
+     "wallet": "L735O6JDT5XZAPZXOCCBYPV3GL7FZIDGF7U5MRBNJYOW6WVMENNVJVYDXU",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330031,
+     "ms": 1784246700000,
+     "wallet": "6JOZKWIPEJRETSXZTOQ7WGZS7N43PHTFBYZIMRKWANXHMUCVIK7OELLKVE",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330036,
+     "ms": 1784246700000,
+     "wallet": "C3OBUOZOTFYICFWX5EIMWFT5IODXOJZNV7IFK6GGAUEITUO6S2IYT6NSPQ",
+     "assetId": "2485202024",
+     "amount": 480.69
+    },
+    {
+     "seq": 330040,
+     "ms": 1784246700000,
+     "wallet": "ZJV7KJLDI45EIBFFQDMX4CDKATBFJVWADDWVAWWL4YNO3POKH6DLCM7HII",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330044,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330048,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330052,
+     "ms": 1784246700000,
+     "wallet": "WG54ABX5IAIXINDUWXDTGG66B2KJ3AOWQPFX22LMASN43QGE3S6WSHBMI4",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330056,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330060,
+     "ms": 1784246700000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330064,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330069,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330074,
+     "ms": 1784246700000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330079,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330084,
+     "ms": 1784246700000,
+     "wallet": "BJKEMPP2HBLNTMFADXZN6AJ3RFSCWCH3Q7YI5R5R2SZQCZK4Y6FL5CIGHI",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330089,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330094,
+     "ms": 1784246700000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330099,
+     "ms": 1784246700000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330104,
+     "ms": 1784246700000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330109,
+     "ms": 1784246700000,
+     "wallet": "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330113,
+     "ms": 1784246700000,
+     "wallet": "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330117,
+     "ms": 1784246700000,
+     "wallet": "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330122,
+     "ms": 1784246700000,
+     "wallet": "AF2HGMGIT62ZAQ6AH4AECKBNU764CJDVTPIBZJKDCAJUIL4SLV437FBXAA",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330127,
+     "ms": 1784246700000,
+     "wallet": "ZOLIE3EW5L5PMNOCT7NNCOJEYQQ4B4S3TS6VAPOQTIEXOV357CRZJ4R3XQ",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330132,
+     "ms": 1784246700000,
+     "wallet": "SLNLBTMSW22OPSGTIILTPEELUKKGYLUTX726JXDNY4PYERMJFTJ2SXEQ2A",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330137,
+     "ms": 1784246700000,
+     "wallet": "2L6BQTIVSEVP443TS53SINNNF4JRAMOBP65ESL2KMBF3O2D3QRRZDIAL3U",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330142,
+     "ms": 1784246700000,
+     "wallet": "7KBDH6Q34F33FOQV237EJLL5GUWQSANMIBCCFGKS6JW3KWZMHR3TYOAKQY",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330147,
+     "ms": 1784246700000,
+     "wallet": "K2PK6EZLDO7UHGC3C5MFQQK2IB7CVWLDQBMIL3CXMGSUVASDMQR3PLM5WU",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330152,
+     "ms": 1784246700000,
+     "wallet": "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330156,
+     "ms": 1784246700000,
+     "wallet": "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330161,
+     "ms": 1784246700000,
+     "wallet": "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330166,
+     "ms": 1784246700000,
+     "wallet": "MM653R7E3BFMGEC2PRZATAMRRDQNQO5VBDFES643AMYSXOBSSFOF5WNOZM",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330171,
+     "ms": 1784246700000,
+     "wallet": "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330176,
+     "ms": 1784246700000,
+     "wallet": "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330180,
+     "ms": 1784246700000,
+     "wallet": "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI",
+     "assetId": "2485202024",
+     "amount": 160.23
+    },
+    {
+     "seq": 330185,
+     "ms": 1784246700000,
+     "wallet": "MM653R7E3BFMGEC2PRZATAMRRDQNQO5VBDFES643AMYSXOBSSFOF5WNOZM",
+     "assetId": "2485202024",
+     "amount": 160.23
+    }
+   ],
+   "expected": {
+    "wallets": {
+     "2L6BQTIVSEVP443TS53SINNNF4JRAMOBP65ESL2KMBF3O2D3QRRZDIAL3U": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA": {
+      "device_count": 4,
+      "fnode": 640920000,
+      "tfry": 0
+     },
+     "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q": {
+      "device_count": 8,
+      "fnode": 1281840000,
+      "tfry": 0
+     },
+     "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M": {
+      "device_count": 3,
+      "fnode": 480689999,
+      "tfry": 0
+     },
+     "6JOZKWIPEJRETSXZTOQ7WGZS7N43PHTFBYZIMRKWANXHMUCVIK7OELLKVE": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "7KBDH6Q34F33FOQV237EJLL5GUWQSANMIBCCFGKS6JW3KWZMHR3TYOAKQY": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "AF2HGMGIT62ZAQ6AH4AECKBNU764CJDVTPIBZJKDCAJUIL4SLV437FBXAA": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "BJKEMPP2HBLNTMFADXZN6AJ3RFSCWCH3Q7YI5R5R2SZQCZK4Y6FL5CIGHI": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "C3OBUOZOTFYICFWX5EIMWFT5IODXOJZNV7IFK6GGAUEITUO6S2IYT6NSPQ": {
+      "device_count": 1,
+      "fnode": 480690000,
+      "tfry": 0
+     },
+     "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y": {
+      "device_count": 3,
+      "fnode": 480689999,
+      "tfry": 0
+     },
+     "K2PK6EZLDO7UHGC3C5MFQQK2IB7CVWLDQBMIL3CXMGSUVASDMQR3PLM5WU": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "L735O6JDT5XZAPZXOCCBYPV3GL7FZIDGF7U5MRBNJYOW6WVMENNVJVYDXU": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "MM653R7E3BFMGEC2PRZATAMRRDQNQO5VBDFES643AMYSXOBSSFOF5WNOZM": {
+      "device_count": 2,
+      "fnode": 320460000,
+      "tfry": 0
+     },
+     "SLNLBTMSW22OPSGTIILTPEELUKKGYLUTX726JXDNY4PYERMJFTJ2SXEQ2A": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "WG54ABX5IAIXINDUWXDTGG66B2KJ3AOWQPFX22LMASN43QGE3S6WSHBMI4": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI": {
+      "device_count": 3,
+      "fnode": 480689999,
+      "tfry": 0
+     },
+     "ZJV7KJLDI45EIBFFQDMX4CDKATBFJVWADDWVAWWL4YNO3POKH6DLCM7HII": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     },
+     "ZOLIE3EW5L5PMNOCT7NNCOJEYQQ4B4S3TS6VAPOQTIEXOV357CRZJ4R3XQ": {
+      "device_count": 1,
+      "fnode": 160230000,
+      "tfry": 0
+     }
+    },
+    "devices_without_wallet": 0
+   }
+  },
+  "2026-06-26": {
+   "rows": [
+    {
+     "seq": 330023,
+     "ms": 1782432300000,
+     "wallet": "L735O6JDT5XZAPZXOCCBYPV3GL7FZIDGF7U5MRBNJYOW6WVMENNVJVYDXU",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330028,
+     "ms": 1782432300000,
+     "wallet": "6JOZKWIPEJRETSXZTOQ7WGZS7N43PHTFBYZIMRKWANXHMUCVIK7OELLKVE",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330033,
+     "ms": 1782432300000,
+     "wallet": "C3OBUOZOTFYICFWX5EIMWFT5IODXOJZNV7IFK6GGAUEITUO6S2IYT6NSPQ",
+     "assetId": "2485202024",
+     "amount": 563.13
+    },
+    {
+     "seq": 330037,
+     "ms": 1782432300000,
+     "wallet": "ZJV7KJLDI45EIBFFQDMX4CDKATBFJVWADDWVAWWL4YNO3POKH6DLCM7HII",
+     "assetId": "2485202024",
+     "amount": 343.38
+    },
+    {
+     "seq": 330041,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 343.38
+    },
+    {
+     "seq": 330045,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 343.38
+    },
+    {
+     "seq": 330049,
+     "ms": 1782432300000,
+     "wallet": "WG54ABX5IAIXINDUWXDTGG66B2KJ3AOWQPFX22LMASN43QGE3S6WSHBMI4",
+     "assetId": "2485202024",
+     "amount": 343.38
+    },
+    {
+     "seq": 330053,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330057,
+     "ms": 1782432300000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330061,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330066,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330071,
+     "ms": 1782432300000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330076,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330081,
+     "ms": 1782432300000,
+     "wallet": "BJKEMPP2HBLNTMFADXZN6AJ3RFSCWCH3Q7YI5R5R2SZQCZK4Y6FL5CIGHI",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330086,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330091,
+     "ms": 1782432300000,
+     "wallet": "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330096,
+     "ms": 1782432300000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330101,
+     "ms": 1782432300000,
+     "wallet": "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330106,
+     "ms": 1782432300000,
+     "wallet": "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330110,
+     "ms": 1782432300000,
+     "wallet": "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330114,
+     "ms": 1782432300000,
+     "wallet": "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330119,
+     "ms": 1782432300000,
+     "wallet": "AF2HGMGIT62ZAQ6AH4AECKBNU764CJDVTPIBZJKDCAJUIL4SLV437FBXAA",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330124,
+     "ms": 1782432300000,
+     "wallet": "ZOLIE3EW5L5PMNOCT7NNCOJEYQQ4B4S3TS6VAPOQTIEXOV357CRZJ4R3XQ",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330129,
+     "ms": 1782432300000,
+     "wallet": "SLNLBTMSW22OPSGTIILTPEELUKKGYLUTX726JXDNY4PYERMJFTJ2SXEQ2A",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330134,
+     "ms": 1782432300000,
+     "wallet": "2L6BQTIVSEVP443TS53SINNNF4JRAMOBP65ESL2KMBF3O2D3QRRZDIAL3U",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330139,
+     "ms": 1782432300000,
+     "wallet": "7KBDH6Q34F33FOQV237EJLL5GUWQSANMIBCCFGKS6JW3KWZMHR3TYOAKQY",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330144,
+     "ms": 1782432300000,
+     "wallet": "K2PK6EZLDO7UHGC3C5MFQQK2IB7CVWLDQBMIL3CXMGSUVASDMQR3PLM5WU",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330149,
+     "ms": 1782432300000,
+     "wallet": "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330153,
+     "ms": 1782432300000,
+     "wallet": "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330158,
+     "ms": 1782432300000,
+     "wallet": "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330163,
+     "ms": 1782432300000,
+     "wallet": "MM653R7E3BFMGEC2PRZATAMRRDQNQO5VBDFES643AMYSXOBSSFOF5WNOZM",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330168,
+     "ms": 1782432300000,
+     "wallet": "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330173,
+     "ms": 1782432300000,
+     "wallet": "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI",
+     "assetId": "2485202024",
+     "amount": 306.75
+    },
+    {
+     "seq": 330177,
+     "ms": 1782432300000,
+     "wallet": "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI",
+     "assetId": "2485202024",
+     "amount": 343.38
+    },
+    {
+     "seq": 330182,
+     "ms": 1782432300000,
+     "wallet": "MM653R7E3BFMGEC2PRZATAMRRDQNQO5VBDFES643AMYSXOBSSFOF5WNOZM",
+     "assetId": "2485202024",
+     "amount": 306.75
+    }
+   ],
+   "expected": {
+    "wallets": {
+     "2L6BQTIVSEVP443TS53SINNNF4JRAMOBP65ESL2KMBF3O2D3QRRZDIAL3U": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "3DQPXCWN2GM5TZNTQ5DUBINEPIKHYFOAP5EWY36IOKBFQEKMNGDELVU2NA": {
+      "device_count": 4,
+      "fnode": 1227000000,
+      "tfry": 0
+     },
+     "3KSLWW7KIUGIWOVGPIIPIXZUUGTFQ63XST6BIRYDTIIH6B7OOPHDEH764Q": {
+      "device_count": 8,
+      "fnode": 2527260000,
+      "tfry": 0
+     },
+     "56XC4OMLS2D4PLKORYWRGSEGPOZUYF53K4CMPMSKCK526MJMX4YH5NXO3M": {
+      "device_count": 3,
+      "fnode": 920250000,
+      "tfry": 0
+     },
+     "6JOZKWIPEJRETSXZTOQ7WGZS7N43PHTFBYZIMRKWANXHMUCVIK7OELLKVE": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "7KBDH6Q34F33FOQV237EJLL5GUWQSANMIBCCFGKS6JW3KWZMHR3TYOAKQY": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "AF2HGMGIT62ZAQ6AH4AECKBNU764CJDVTPIBZJKDCAJUIL4SLV437FBXAA": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "BJKEMPP2HBLNTMFADXZN6AJ3RFSCWCH3Q7YI5R5R2SZQCZK4Y6FL5CIGHI": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "C3OBUOZOTFYICFWX5EIMWFT5IODXOJZNV7IFK6GGAUEITUO6S2IYT6NSPQ": {
+      "device_count": 1,
+      "fnode": 563130000,
+      "tfry": 0
+     },
+     "HTPGUJUWKALS3WTEPO54Q7ORCPPWUGJPA3TUTDYYYKMU7OI4CBJVD73R6Y": {
+      "device_count": 3,
+      "fnode": 920250000,
+      "tfry": 0
+     },
+     "K2PK6EZLDO7UHGC3C5MFQQK2IB7CVWLDQBMIL3CXMGSUVASDMQR3PLM5WU": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "L735O6JDT5XZAPZXOCCBYPV3GL7FZIDGF7U5MRBNJYOW6WVMENNVJVYDXU": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "MM653R7E3BFMGEC2PRZATAMRRDQNQO5VBDFES643AMYSXOBSSFOF5WNOZM": {
+      "device_count": 2,
+      "fnode": 613500000,
+      "tfry": 0
+     },
+     "SLNLBTMSW22OPSGTIILTPEELUKKGYLUTX726JXDNY4PYERMJFTJ2SXEQ2A": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     },
+     "WG54ABX5IAIXINDUWXDTGG66B2KJ3AOWQPFX22LMASN43QGE3S6WSHBMI4": {
+      "device_count": 1,
+      "fnode": 343380000,
+      "tfry": 0
+     },
+     "ZIRYMFDFMAPI65HM6IU6NE67IHB37VJ44LJUZMPGIPUW57AXFYONRSWIVI": {
+      "device_count": 3,
+      "fnode": 956880000,
+      "tfry": 0
+     },
+     "ZJV7KJLDI45EIBFFQDMX4CDKATBFJVWADDWVAWWL4YNO3POKH6DLCM7HII": {
+      "device_count": 1,
+      "fnode": 343380000,
+      "tfry": 0
+     },
+     "ZOLIE3EW5L5PMNOCT7NNCOJEYQQ4B4S3TS6VAPOQTIEXOV357CRZJ4R3XQ": {
+      "device_count": 1,
+      "fnode": 306750000,
+      "tfry": 0
+     }
+    },
+    "devices_without_wallet": 0
+   }
+  },
+  "2026-02-27": {
+   "rows": [
+    {
+     "seq": 260227,
+     "ms": 1772150700000,
+     "wallet": "2AJUH336OWWP7PSAAOPH22JA4DFEQGPXAHOBCAWUF4YBCHATVGVMWXQ2A4",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260241,
+     "ms": 1772150700000,
+     "wallet": "PYORY5E6ANTEO7UOUW3JK27JDW3PI2LB4K2RDNO2TOTZYIC6IZ3ENZZNJI",
+     "assetId": "2485202024",
+     "amount": 2499.84
+    },
+    {
+     "seq": 260254,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260268,
+     "ms": 1772150700000,
+     "wallet": "HHM5TEVNC5RJ726G36PWMVEUA5S5BYFGMXG3KFUIJ73O2SRWJBAANLB7VM",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260286,
+     "ms": 1772150700000,
+     "wallet": "VXMIJY6FLGZZZ6ZZ3WNJKQLF54WRPGN3DSO5UDHMGAENJLOIJ6DEDORDJE",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260302,
+     "ms": 1772150700000,
+     "wallet": "UHKKMUOH5ETGVR7GR6PG6THBIYTT753KMGSW4ZASKN2SPOKT4RPKBNS45E",
+     "assetId": "2681521901",
+     "amount": 208.32
+    },
+    {
+     "seq": 260320,
+     "ms": 1772150700000,
+     "wallet": "T6CLB727ZVWDA7EOB7UEBHGC7Y3GZVE3LV2HKCXQGDXLTDOTSMG4YAVQRU",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260333,
+     "ms": 1772150700000,
+     "wallet": "T6CLB727ZVWDA7EOB7UEBHGC7Y3GZVE3LV2HKCXQGDXLTDOTSMG4YAVQRU",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260346,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260359,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260372,
+     "ms": 1772150700000,
+     "wallet": "FGCOER2A6CWC3XLQ3AWNBAB6HZF2SHYS26YCAG6EH56I62DM6RCU7BGJAQ",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260385,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260398,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260411,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260424,
+     "ms": 1772150700000,
+     "wallet": "47DPEZA5O4VXX5DY5Z7MMHPPTGPEQ5ZBO2Y2RAXW3ZEHEG4MYAGVBLFUX4",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260437,
+     "ms": 1772150700000,
+     "wallet": "ZKKHPRYNIWK73YR2EPQU7BC4TSOFTQOSLCTZ74DUSTYQ4ZWZCX62JDD7Z4",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260451,
+     "ms": 1772150700000,
+     "wallet": "E5W3WWJNTDXS5FUPU7ZTNO6DEDWOTWFQMUDBSJRHIG4CH4T6M4PFLYXVQI",
+     "assetId": "2485202024",
+     "amount": 2499.84
+    },
+    {
+     "seq": 260462,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260474,
+     "ms": 1772150700000,
+     "wallet": "JCVVX6BNW6AU7JAXN73Q3C524R5O7ATXX25CCT5GWNX4A367UUY4DNGKAU",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260488,
+     "ms": 1772150700000,
+     "wallet": "ATTBMT5SOIMJB4EY6YLPFEG3ZZMNHDA5XTLX6ZAZEPRQ2TLHBYLHZYYZJQ",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260500,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260512,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260524,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260536,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260548,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260560,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260572,
+     "ms": 1772150700000,
+     "wallet": "C3OBUOZOTFYICFWX5EIMWFT5IODXOJZNV7IFK6GGAUEITUO6S2IYT6NSPQ",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260590,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260602,
+     "ms": 1772150700000,
+     "wallet": "M2ZHBTXN37NNHGMDSF5I5P3ETQ5LMZI4ZTI5MYHTPV7DW5D2VJR53MFEQE",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260612,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260622,
+     "ms": 1772150700000,
+     "wallet": "E34U7RLDQR4WEYPI47VZKCBDIGZCFE4GY6N3QPHCJSJOCCHOWUBZ2H26BQ",
+     "assetId": "2485202024",
+     "amount": 10395
+    },
+    {
+     "seq": 260632,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260642,
+     "ms": 1772150700000,
+     "wallet": "ZBVRTRFD4EWGWFDYF353R63SM6RN3KPAUENOS7IYGSSLCDB4U73MAKDJKQ",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260652,
+     "ms": 1772150700000,
+     "wallet": "WG4SKPYEW5VFWNITXRLBZMS5XG7BUHS2MNFIWI5IGVRE7GLOWQBVNIS2RY",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260662,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260672,
+     "ms": 1772150700000,
+     "wallet": "PFTH6BQNVCNWB6KSHALJZFW5WKNQCCRQOOLWHNA64NNTZRYCQIINHWVDCY",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260682,
+     "ms": 1772150700000,
+     "wallet": "WG4SKPYEW5VFWNITXRLBZMS5XG7BUHS2MNFIWI5IGVRE7GLOWQBVNIS2RY",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260692,
+     "ms": 1772150700000,
+     "wallet": "SB3QTRXF66BBC3YACED4SL4NHJ75HCYUKVMZV775CUVBYEQ2PJR7FD5FVI",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260702,
+     "ms": 1772150700000,
+     "wallet": "SB3QTRXF66BBC3YACED4SL4NHJ75HCYUKVMZV775CUVBYEQ2PJR7FD5FVI",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260712,
+     "ms": 1772150700000,
+     "wallet": "ZBVRTRFD4EWGWFDYF353R63SM6RN3KPAUENOS7IYGSSLCDB4U73MAKDJKQ",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 260722,
+     "ms": 1772150700000,
+     "wallet": "SB3QTRXF66BBC3YACED4SL4NHJ75HCYUKVMZV775CUVBYEQ2PJR7FD5FVI",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 260731,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 260739,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2485202024",
+     "amount": 833.28
+    },
+    {
+     "seq": 307182,
+     "ms": 1772150700000,
+     "wallet": "HHM5TEVNC5RJ726G36PWMVEUA5S5BYFGMXG3KFUIJ73O2SRWJBAANLB7VM",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307198,
+     "ms": 1772150700000,
+     "wallet": "DSJ2CHXIX3B5TIR74ZO3MHKBYSTI4RTKM6WLTQUJYEF6NNBSJFE5R4KUZQ",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307212,
+     "ms": 1772150700000,
+     "wallet": "KMFXWQV4W2R6ILH5TUTSS7OTCXYHOJGV7RI5RLS4X37OF6CZNLSXPVK72Q",
+     "assetId": "2681521901",
+     "amount": 624.96
+    },
+    {
+     "seq": 307226,
+     "ms": 1772150700000,
+     "wallet": "UHKKMUOH5ETGVR7GR6PG6THBIYTT753KMGSW4ZASKN2SPOKT4RPKBNS45E",
+     "assetId": "2681521901",
+     "amount": 624.96
+    },
+    {
+     "seq": 307242,
+     "ms": 1772150700000,
+     "wallet": "C3YHPWBIFGXYGCNKGBQINVKLMOLHQIF74KDGYGJMQCZ54URLPYBBQQRSAQ",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307256,
+     "ms": 1772150700000,
+     "wallet": "UHKKMUOH5ETGVR7GR6PG6THBIYTT753KMGSW4ZASKN2SPOKT4RPKBNS45E",
+     "assetId": "2681521901",
+     "amount": 312.48
+    },
+    {
+     "seq": 307275,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307289,
+     "ms": 1772150700000,
+     "wallet": "47DPEZA5O4VXX5DY5Z7MMHPPTGPEQ5ZBO2Y2RAXW3ZEHEG4MYAGVBLFUX4",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307305,
+     "ms": 1772150700000,
+     "wallet": "CRS7OWGL5SUS4CIYDO466CVEKGSSAVW4ZXMNRJP4WJI5QRPKVEV5GNCNCA",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307319,
+     "ms": 1772150700000,
+     "wallet": "UZFLYD3IIMVXZFS353Y5XUP74AZCNNIMDLKFT2VYKKJNEKPUSQ3AR475X4",
+     "assetId": "2681521901",
+     "amount": 208.32
+    },
+    {
+     "seq": 307333,
+     "ms": 1772150700000,
+     "wallet": "PYORY5E6ANTEO7UOUW3JK27JDW3PI2LB4K2RDNO2TOTZYIC6IZ3ENZZNJI",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307347,
+     "ms": 1772150700000,
+     "wallet": "CRS7OWGL5SUS4CIYDO466CVEKGSSAVW4ZXMNRJP4WJI5QRPKVEV5GNCNCA",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307361,
+     "ms": 1772150700000,
+     "wallet": "PYORY5E6ANTEO7UOUW3JK27JDW3PI2LB4K2RDNO2TOTZYIC6IZ3ENZZNJI",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307376,
+     "ms": 1772150700000,
+     "wallet": "RGBBE5TA4ECMBBPAL2ZCVNUYOAUCNO3UQMQLSLERVUYZB4DWRHC4RME3LQ",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307389,
+     "ms": 1772150700000,
+     "wallet": "T6CLB727ZVWDA7EOB7UEBHGC7Y3GZVE3LV2HKCXQGDXLTDOTSMG4YAVQRU",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307402,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307646,
+     "ms": 1772150700000,
+     "wallet": "T6CLB727ZVWDA7EOB7UEBHGC7Y3GZVE3LV2HKCXQGDXLTDOTSMG4YAVQRU",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307658,
+     "ms": 1772150700000,
+     "wallet": "JEWNRH4NCUZ46QX6IYIOGSIATG452V2OD6ORXJSQQZLAHWWGVZTTDHSS3Q",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307668,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307678,
+     "ms": 1772150700000,
+     "wallet": "SB3QTRXF66BBC3YACED4SL4NHJ75HCYUKVMZV775CUVBYEQ2PJR7FD5FVI",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307688,
+     "ms": 1772150700000,
+     "wallet": "WG4SKPYEW5VFWNITXRLBZMS5XG7BUHS2MNFIWI5IGVRE7GLOWQBVNIS2RY",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307698,
+     "ms": 1772150700000,
+     "wallet": "WG4SKPYEW5VFWNITXRLBZMS5XG7BUHS2MNFIWI5IGVRE7GLOWQBVNIS2RY",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307708,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307718,
+     "ms": 1772150700000,
+     "wallet": "ZS5OGNCKLPSOTMN36OONCQ6XOVBP26PHDVWGLLO2R5ADBFE2DMA3HFVZLU",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307730,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307740,
+     "ms": 1772150700000,
+     "wallet": "SB3QTRXF66BBC3YACED4SL4NHJ75HCYUKVMZV775CUVBYEQ2PJR7FD5FVI",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307750,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307760,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307770,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307780,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307790,
+     "ms": 1772150700000,
+     "wallet": "6TDB6WPQ762MXERBYGQIJ7SMNQE7MMT22F63PPDTSYAPRLLVNQPVAYJDHA",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307800,
+     "ms": 1772150700000,
+     "wallet": "6TDB6WPQ762MXERBYGQIJ7SMNQE7MMT22F63PPDTSYAPRLLVNQPVAYJDHA",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307810,
+     "ms": 1772150700000,
+     "wallet": "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307819,
+     "ms": 1772150700000,
+     "wallet": "VJLJJYVYVIIY7IL3YHJVHWXFDTPPEBB3WPL2J7EQ2FMKGVGLV65UBONP2Y",
+     "assetId": "2681521901",
+     "amount": 416.64
+    },
+    {
+     "seq": 307830,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307839,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 624.96
+    },
+    {
+     "seq": 307848,
+     "ms": 1772150700000,
+     "wallet": "\\N",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307856,
+     "ms": 1772150700000,
+     "wallet": "L735O6JDT5XZAPZXOCCBYPV3GL7FZIDGF7U5MRBNJYOW6WVMENNVJVYDXU",
+     "assetId": "2681521901",
+     "amount": 1249.92
+    },
+    {
+     "seq": 307866,
+     "ms": 1772150700000,
+     "wallet": "3VEC7F2G6U53AU4TJLNQX27L23N4RQDWID7GRCPNRULEXHUG4V75Z574N4",
+     "assetId": "2485202024",
+     "amount": 20790
+    },
+    {
+     "seq": 307874,
+     "ms": 1772150700000,
+     "wallet": "W7MJRLVGOBOTECTU2OSBNFTCLRCRVDV2S7LRP6O5FOBADWSWW34PGPHZJI",
+     "assetId": "2485202024",
+     "amount": 14850
+    },
+    {
+     "seq": 307883,
+     "ms": 1772150700000,
+     "wallet": "W7MJRLVGOBOTECTU2OSBNFTCLRCRVDV2S7LRP6O5FOBADWSWW34PGPHZJI",
+     "assetId": "2485202024",
+     "amount": 14850
+    },
+    {
+     "seq": 307892,
+     "ms": 1772150700000,
+     "wallet": "52TFWM5Z25XUT5SSSZH4JCKORSURG6SBARBMOCXUSXIU4MGLG7QPCGOC6E",
+     "assetId": "2485202024",
+     "amount": 7425
+    },
+    {
+     "seq": 307900,
+     "ms": 1772150700000,
+     "wallet": "W7MJRLVGOBOTECTU2OSBNFTCLRCRVDV2S7LRP6O5FOBADWSWW34PGPHZJI",
+     "assetId": "2485202024",
+     "amount": 14850
+    },
+    {
+     "seq": 307909,
+     "ms": 1772150700000,
+     "wallet": "P3SLIO26GPETGRIKJSXO43PJOV7OGDSFICOCDFXH2UVN4VUXZGO4ACRXSU",
+     "assetId": "2485202024",
+     "amount": 2970
+    },
+    {
+     "seq": 307916,
+     "ms": 1772150700000,
+     "wallet": "P3SLIO26GPETGRIKJSXO43PJOV7OGDSFICOCDFXH2UVN4VUXZGO4ACRXSU",
+     "assetId": "2485202024",
+     "amount": 2970
+    }
+   ],
+   "expected": {
+    "wallets": {
+     "2AJUH336OWWP7PSAAOPH22JA4DFEQGPXAHOBCAWUF4YBCHATVGVMWXQ2A4": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 1249920000
+     },
+     "3VEC7F2G6U53AU4TJLNQX27L23N4RQDWID7GRCPNRULEXHUG4V75Z574N4": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "47DPEZA5O4VXX5DY5Z7MMHPPTGPEQ5ZBO2Y2RAXW3ZEHEG4MYAGVBLFUX4": {
+      "device_count": 2,
+      "fnode": 20790000000,
+      "tfry": 1249920000
+     },
+     "52TFWM5Z25XUT5SSSZH4JCKORSURG6SBARBMOCXUSXIU4MGLG7QPCGOC6E": {
+      "device_count": 1,
+      "fnode": 7425000000,
+      "tfry": 0
+     },
+     "6TDB6WPQ762MXERBYGQIJ7SMNQE7MMT22F63PPDTSYAPRLLVNQPVAYJDHA": {
+      "device_count": 2,
+      "fnode": 0,
+      "tfry": 833280000
+     },
+     "ATTBMT5SOIMJB4EY6YLPFEG3ZZMNHDA5XTLX6ZAZEPRQ2TLHBYLHZYYZJQ": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 416640000
+     },
+     "C3OBUOZOTFYICFWX5EIMWFT5IODXOJZNV7IFK6GGAUEITUO6S2IYT6NSPQ": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "C3YHPWBIFGXYGCNKGBQINVKLMOLHQIF74KDGYGJMQCZ54URLPYBBQQRSAQ": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "CRS7OWGL5SUS4CIYDO466CVEKGSSAVW4ZXMNRJP4WJI5QRPKVEV5GNCNCA": {
+      "device_count": 2,
+      "fnode": 0,
+      "tfry": 833280000
+     },
+     "DSJ2CHXIX3B5TIR74ZO3MHKBYSTI4RTKM6WLTQUJYEF6NNBSJFE5R4KUZQ": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "E34U7RLDQR4WEYPI47VZKCBDIGZCFE4GY6N3QPHCJSJOCCHOWUBZ2H26BQ": {
+      "device_count": 1,
+      "fnode": 10395000000,
+      "tfry": 0
+     },
+     "E5W3WWJNTDXS5FUPU7ZTNO6DEDWOTWFQMUDBSJRHIG4CH4T6M4PFLYXVQI": {
+      "device_count": 1,
+      "fnode": 2499840000,
+      "tfry": 0
+     },
+     "FGCOER2A6CWC3XLQ3AWNBAB6HZF2SHYS26YCAG6EH56I62DM6RCU7BGJAQ": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 1249920000
+     },
+     "HD4TS4HQQB2YVVNCVBNZWRXJA7GY7TWGLTYYK37O4QVVFDJZDWMRYTP7QE": {
+      "device_count": 8,
+      "fnode": 83160000000,
+      "tfry": 4999680000
+     },
+     "HHM5TEVNC5RJ726G36PWMVEUA5S5BYFGMXG3KFUIJ73O2SRWJBAANLB7VM": {
+      "device_count": 2,
+      "fnode": 41580000000,
+      "tfry": 0
+     },
+     "JCVVX6BNW6AU7JAXN73Q3C524R5O7ATXX25CCT5GWNX4A367UUY4DNGKAU": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "JEWNRH4NCUZ46QX6IYIOGSIATG452V2OD6ORXJSQQZLAHWWGVZTTDHSS3Q": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 416640000
+     },
+     "KMFXWQV4W2R6ILH5TUTSS7OTCXYHOJGV7RI5RLS4X37OF6CZNLSXPVK72Q": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 624960000
+     },
+     "L735O6JDT5XZAPZXOCCBYPV3GL7FZIDGF7U5MRBNJYOW6WVMENNVJVYDXU": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 1249920000
+     },
+     "M2ZHBTXN37NNHGMDSF5I5P3ETQ5LMZI4ZTI5MYHTPV7DW5D2VJR53MFEQE": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "P3SLIO26GPETGRIKJSXO43PJOV7OGDSFICOCDFXH2UVN4VUXZGO4ACRXSU": {
+      "device_count": 2,
+      "fnode": 5940000000,
+      "tfry": 0
+     },
+     "PFTH6BQNVCNWB6KSHALJZFW5WKNQCCRQOOLWHNA64NNTZRYCQIINHWVDCY": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 1249920000
+     },
+     "PYORY5E6ANTEO7UOUW3JK27JDW3PI2LB4K2RDNO2TOTZYIC6IZ3ENZZNJI": {
+      "device_count": 3,
+      "fnode": 23289840000,
+      "tfry": 1249920000
+     },
+     "RGBBE5TA4ECMBBPAL2ZCVNUYOAUCNO3UQMQLSLERVUYZB4DWRHC4RME3LQ": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 1249920000
+     },
+     "SB3QTRXF66BBC3YACED4SL4NHJ75HCYUKVMZV775CUVBYEQ2PJR7FD5FVI": {
+      "device_count": 5,
+      "fnode": 0,
+      "tfry": 6249600000
+     },
+     "T6CLB727ZVWDA7EOB7UEBHGC7Y3GZVE3LV2HKCXQGDXLTDOTSMG4YAVQRU": {
+      "device_count": 4,
+      "fnode": 0,
+      "tfry": 1666560000
+     },
+     "UHKKMUOH5ETGVR7GR6PG6THBIYTT753KMGSW4ZASKN2SPOKT4RPKBNS45E": {
+      "device_count": 3,
+      "fnode": 0,
+      "tfry": 1145760000
+     },
+     "UZFLYD3IIMVXZFS353Y5XUP74AZCNNIMDLKFT2VYKKJNEKPUSQ3AR475X4": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 208320000
+     },
+     "VJLJJYVYVIIY7IL3YHJVHWXFDTPPEBB3WPL2J7EQ2FMKGVGLV65UBONP2Y": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 416640000
+     },
+     "VXMIJY6FLGZZZ6ZZ3WNJKQLF54WRPGN3DSO5UDHMGAENJLOIJ6DEDORDJE": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "W7MJRLVGOBOTECTU2OSBNFTCLRCRVDV2S7LRP6O5FOBADWSWW34PGPHZJI": {
+      "device_count": 3,
+      "fnode": 44550000000,
+      "tfry": 0
+     },
+     "WG4SKPYEW5VFWNITXRLBZMS5XG7BUHS2MNFIWI5IGVRE7GLOWQBVNIS2RY": {
+      "device_count": 4,
+      "fnode": 83160000000,
+      "tfry": 0
+     },
+     "ZBVRTRFD4EWGWFDYF353R63SM6RN3KPAUENOS7IYGSSLCDB4U73MAKDJKQ": {
+      "device_count": 2,
+      "fnode": 41580000000,
+      "tfry": 0
+     },
+     "ZKKHPRYNIWK73YR2EPQU7BC4TSOFTQOSLCTZ74DUSTYQ4ZWZCX62JDD7Z4": {
+      "device_count": 1,
+      "fnode": 20790000000,
+      "tfry": 0
+     },
+     "ZS5OGNCKLPSOTMN36OONCQ6XOVBP26PHDVWGLLO2R5ADBFE2DMA3HFVZLU": {
+      "device_count": 1,
+      "fnode": 0,
+      "tfry": 1249920000
+     }
+    },
+    "devices_without_wallet": 24
+   }
+  }
+ }
+}

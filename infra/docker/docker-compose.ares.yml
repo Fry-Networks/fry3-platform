@@ -1,0 +1,44 @@
+# Fry 3.0 — ARES00 deployment overlay (P4b). API co-located with the migrated fry3 DB
+# (supabase-db, docker net supabase_default). Side-by-side, NOT public until cutover.
+# Reversal: docker compose -f docker-compose.ares.yml down; DROP ROLE fry3_app; rm -rf /home/fry/fry3p.
+name: fry3
+networks:
+  supabase_default:
+    external: true
+  fry3-net:
+    external: true
+
+services:
+  api:
+    build:
+      context: ../../
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: fry3-api
+    networks: [supabase_default, fry3-net]
+    environment:
+      FRY3_DATABASE_URL: postgresql://fry3_app:${FRY3_PGPW}@supabase-db:5432/fry3
+      FRY3_OPERATOR_TOKEN: ${FRY3_OPERATOR_TOKEN}
+      API_BEARER_TOKEN: ${FRY3_LEGACY_BEARER:-fry3-staging-legacy-token}
+      PORT: "3000"
+      HOST: "0.0.0.0"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  byod:
+    image: fry3-byod:latest
+    container_name: fry3-byod
+    networks: [fry3-net]
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5

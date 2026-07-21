@@ -31,6 +31,12 @@ export interface RewardPolicyConfig {
   weights: Partial<Record<IntegrationKind, bigint>>;
   /** weight applied once when storage_capability is present (storj OR space_acres) */
   storageCapabilityWeight: bigint;
+  /**
+   * Freshness window (seconds) for the storage slot's SINGLE daily attestation
+   * (1 slot/day, not 144). Optional; default 86400 is applied at the evidence
+   * step (integration-health / reward-engine storage-slot wiring).
+   */
+  storageAttestationMaxAgeSeconds?: number;
   /** device must have a heartbeat within this many seconds to be online-eligible */
   onlineThresholdSeconds: number;
   intervalSeconds: number;
