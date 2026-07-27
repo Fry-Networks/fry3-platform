@@ -16,6 +16,7 @@ services:
       context: ../../
       dockerfile: infra/docker/bridge.Dockerfile
     container_name: fry3-bridge
+    dns: ["8.8.8.8", "1.1.1.1"]
     networks: [supabase_default, fry3-net]
     environment:
       FRY3_FEM_TOKEN_SHIM: ${FRY3_FEM_TOKEN_SHIM}
