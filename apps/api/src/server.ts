@@ -10,6 +10,9 @@ import { evaluateClaim, ClaimStatus } from "@fry3/claim-dispatcher";
 import { verifiedHealthySetWithStorageSlot } from "@fry3/integration-health";
 import { registerLegacyTelemetry } from "./legacy-telemetry.js";
 import { registerByod } from "./byod.js";
+// gap-(b) FEM device-token compat-shim (P9c). Type-only import => erased at build, no runtime
+// mongodb load; the mirror itself is dynamically imported in the isMain block only when enabled.
+import type { ApiTokenMirror } from "./fem-token-mongo-sink.js";
 
 /** Minimal store interface — implemented by Prisma store; injectable for tests. */
 export interface ApiStore {
@@ -25,7 +28,7 @@ export interface ApiStore {
   byodActivate?(input: { licenseKey: string; deviceRef: string; now: Date }): Promise<{ ok: true; deviceId: string; activatedAt: Date; idempotent?: boolean } | { ok: false; code: number; reason: string }>;
 }
 
-export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore }) {
+export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore; tokenMirror?: ApiTokenMirror }) {
   const app = Fastify({ logger: false, genReqId: () => crypto.randomUUID() });
   const policy = opts.policy;
   const store = opts.store;
@@ -193,7 +196,7 @@ export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore
     return c;
   });
 
-  registerLegacyTelemetry(app, store);
+  registerLegacyTelemetry(app, store, opts.tokenMirror);
   registerByod(app, store, policy);
 
   return app;
@@ -214,7 +217,14 @@ if (isMain) {
   const store = new PrismaStore(process.env.FRY3_DATABASE_URL);
   const dbPolicy = await store.getActivePolicy().catch(() => null);
   const policy = dbPolicy ?? DEFAULT_POLICY;
-  const app = buildServer({ policy, store });
+  // gap-(b) FEM device-token compat-shim: build the Mongo mirror ONLY when explicitly enabled.
+  // Dynamic import keeps the `mongodb` driver out of the default (shim-off) runtime path.
+  let tokenMirror: ApiTokenMirror | undefined;
+  if (process.env.FRY3_FEM_TOKEN_SHIM === "1" || process.env.FRY3_FEM_TOKEN_SHIM === "true") {
+    const { makeApiTokenMirror } = await import("./fem-token-mongo-sink.js");
+    tokenMirror = await makeApiTokenMirror(process.env);
+  }
+  const app = buildServer({ policy, store, tokenMirror });
   app.listen({ port: Number(process.env.PORT ?? 3000), host: process.env.HOST ?? "0.0.0.0" }).then(() => {
     console.log(`fry3 api listening (policy v${policy.version}, storageWeight=${policy.storageCapabilityWeight})`);
   });

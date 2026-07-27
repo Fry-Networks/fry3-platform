@@ -58,6 +58,8 @@ export interface SendUnit {
   amountBase: bigint;
   intentId: string;
   intentDomain?: "arm" | "settlement";
+  /** Underlying obligation id; required to authorise on-chain-indistinguishable twins. */
+  entitlementKey?: string;
 }
 
 /** Append-only send-ledger record (arm-sends-<epoch>.jsonl). */

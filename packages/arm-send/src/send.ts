@@ -28,6 +28,7 @@ import { decideSend } from "./decide.js";
 import { buildAssetTransfer } from "./build.js";
 import { PAYMENT_ASSETS, VALIDITY_WINDOW_ROUNDS } from "./types.js";
 import { ArmSanityFailed } from "./manifest.js";
+import { assertNoDuplicatePaymentTuples } from "./entitlement-guard.js";
 
 export class ArmSigningAuthaddrMismatch extends Error {
   constructor(msg: string) {
@@ -147,6 +148,13 @@ export async function runSendBatch(opts: SendBatchOpts): Promise<SendBatchResult
     if (seenIntents.has(unit.intentId))
       throw new ArmSanityFailed(`duplicate intent ${unit.intentId}`);
     seenIntents.add(unit.intentId);
+  }
+  // Defence in depth for any caller, not just manifest-derived batches: intentId uniqueness does
+  // NOT imply obligation uniqueness, because intentId embeds the claim id.
+  try {
+    assertNoDuplicatePaymentTuples(units);
+  } catch (error) {
+    throw new ArmSanityFailed((error as Error).message);
   }
 
   let recordScope: Pick<LedgerRecord, "armEpoch" | "batchId" | "intentDomain"> = {

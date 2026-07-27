@@ -79,7 +79,13 @@ function missingField(name: string): FieldError {
   return { type: "missing", loc: ["body", name], msg: "Field required", input: null };
 }
 
-export function registerLegacyTelemetry(app: FastifyInstance, store: ApiStore | undefined) {
+export function registerLegacyTelemetry(
+  app: FastifyInstance,
+  store: ApiStore | undefined,
+  // gap-(b) FEM device-token compat-shim (P9c): optional Mongo mirror, injected only when
+  // FRY3_FEM_TOKEN_SHIM=1 (see server.ts). Undefined => behaviour identical to pre-shim.
+  tokenMirror?: (minerKey: string, installId: string, deviceTokenHash: string) => Promise<{ ok: boolean; error?: string }>,
+) {
   // POST /installations/{miner_key}/installations/{install_id}
   // 202 RegistrationResponse {status:"ok", device_token: string|null}
   app.post("/installations/:minerKey/installations/:installId", async (req, reply) => {
@@ -114,16 +120,23 @@ export function registerLegacyTelemetry(app: FastifyInstance, store: ApiStore | 
       (typeof body.poc_version_installed === "string" && body.poc_version_installed) ||
       null;
     const deviceToken = isFem ? generateDeviceToken() : null;
+    const deviceTokenHash = deviceToken ? hashDeviceToken(deviceToken) : null;
     const r = await store.legacyInstallationHeartbeat({
       minerKey,
       installId,
       version,
       body,
       now,
-      deviceTokenHash: deviceToken ? hashDeviceToken(deviceToken) : null,
+      deviceTokenHash,
     });
     // Open registration: the store only refuses on pathological state (owner row missing).
     if (!r.ok) return reply.code(500).send({ detail: r.reason });
+    // gap-(b) compat-shim: mirror the rotated hash into Mongo PoC.installations BEFORE returning
+    // the token, so the still-OLD token-verified endpoints accept the fresh token (no race).
+    if (isFem && deviceToken && deviceTokenHash && tokenMirror) {
+      const m = await tokenMirror(minerKey, installId, deviceTokenHash);
+      if (!m.ok) req.log?.warn?.({ minerKey, installId, err: m.error }, "fem_token_mongo_mirror_failed");
+    }
     return reply.code(202).send({ status: "ok", device_token: deviceToken });
   });
 

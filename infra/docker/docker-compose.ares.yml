@@ -21,6 +21,8 @@ services:
       API_BEARER_TOKEN: ${FRY3_LEGACY_BEARER:-fry3-staging-legacy-token}
       PORT: "3000"
       HOST: "0.0.0.0"
+      FRY3_FEM_TOKEN_SHIM: ${FRY3_FEM_TOKEN_SHIM:-0}
+      FRY3_BRIDGE_MONGO_URI: ${FRY3_BRIDGE_MONGO_URI:-}
     ports:
       - "3000:3000"
     restart: unless-stopped

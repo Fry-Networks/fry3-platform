@@ -1,0 +1,104 @@
+/**
+ * Tooth B (R3) — LIVE store adapters (Mongo + PG).
+ *
+ * EXCLUDED from the on-host vitest/tsc gate (see tsconfig "exclude"): it imports
+ * the `mongodb` driver and `@prisma/client`, which are installed only in the
+ * fry3 image build. The gate proves the pure contract (mappings/drift/alert/
+ * writer/monitor); this file is the thin wiring, typechecked at image build and
+ * exercised by the flip-time dry-run E2E (drift-monitor READ side may run
+ * pre-flip as a delta-sync progress measure; WRITE side stays dry-run until the
+ * P9c flip).
+ *
+ * The concrete logical-field → store-column bindings (e.g. last_heartbeat_at →
+ * main.devices.<col>) are finalized against the live Mongo/PG schema at flip
+ * time; they live in COLUMN_BINDINGS below and are validated by the flip dry-run
+ * E2E before any live write. This keeps live Mongo READ-ONLY until cutover.
+ */
+
+import { MongoClient } from "mongodb";
+import prismaPkg from "@prisma/client";
+const { PrismaClient } = prismaPkg as any;
+import type { FieldMapping } from "./mappings.js";
+import type { MappingSample } from "./drift.js";
+import type { SourceRow, UpsertOp } from "./writer.js";
+
+export interface LiveDeps {
+  mongo: MongoClient;
+  prisma: any;
+  mongoDbName: string;
+}
+
+export function connect(mongoUri: string, databaseUrl: string, mongoDbName = "main"): LiveDeps {
+  const mongo = new MongoClient(mongoUri);
+  const prisma = new PrismaClient({ datasources: { db: { url: databaseUrl } } });
+  return { mongo, prisma, mongoDbName };
+}
+
+/**
+ * Comparator sample for a mapping: count both stores, find the newest bridged
+ * marker on the target, and checksum the N newest keys. Bindings per mapping
+ * are finalized at flip (validated by the dry-run E2E); until then this reads
+ * counts only (READ-ONLY on both stores).
+ */
+export async function liveSample(
+  deps: LiveDeps,
+  m: FieldMapping,
+  checksumN: number,
+): Promise<MappingSample> {
+  // READ-ONLY count on the Mongo collection named by the mapping target/source.
+  const collName = m.direction === "PG_TO_MONGO" ? m.target : m.source;
+  const mongoCol = deps.mongo.db(deps.mongoDbName).collection(collName.replace(/^main\./, ""));
+  const mongoCount = await mongoCol.estimatedDocumentCount();
+  // PG count is mapping-specific; resolved via COUNT_QUERIES at flip.
+  const pgCount = await countPg(deps, m);
+  return {
+    key: m.key,
+    pgCount,
+    mongoCount,
+    newestSyncedEpochMs: null, // resolved from target newest-marker at flip
+    checksumSampleSize: checksumN,
+    checksumMismatches: 0, // checksum bindings finalized at flip dry-run E2E
+  };
+}
+
+async function countPg(deps: LiveDeps, m: FieldMapping): Promise<number> {
+  // Prisma model per mapping — resolved at flip against the final bindings.
+  switch (m.key) {
+    case "device_liveness":
+    case "device_admin":
+    case "blacklist_ban":
+    case "dao_stake":
+      return deps.prisma.device.count();
+    case "fem_installs":
+      return deps.prisma.femInstance.count();
+    case "reward_dailies":
+      return deps.prisma.rewardAccrual.count();
+    case "claim_display":
+      return deps.prisma.claim.count();
+    default:
+      return 0;
+  }
+}
+
+/** Source rows to sync (owner store). Bindings finalized at flip. */
+export async function liveReadSource(_deps: LiveDeps, _m: FieldMapping): Promise<SourceRow[]> {
+  // Pre-flip this returns [] so the dry-run planner has nothing to write; the
+  // concrete owner-store projections are wired + validated at flip time.
+  return [];
+}
+
+/** Live upsert sink (only reached when dryRun=false, i.e. at/after flip). */
+export async function liveSink(deps: LiveDeps, op: UpsertOp): Promise<void> {
+  if (op.store === "MONGO") {
+    const col = deps.mongo.db(deps.mongoDbName).collection(op.target.replace(/^main\./, ""));
+    await col.updateOne({ [op.keyBy]: op.keyValue }, { $set: op.set }, { upsert: true });
+  } else {
+    // PG upserts route through Prisma per-model at flip; guarded until then.
+    throw new Error(`pg_sink_unbound:${op.keyBy}=${op.keyValue}`);
+  }
+}
+
+export async function close(deps: LiveDeps): Promise<void> {
+  await deps.mongo.close();
+  await deps.prisma.$disconnect();
+}

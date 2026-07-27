@@ -5,12 +5,27 @@ import {
   type PaymentAsset,
   type SendUnit,
 } from "./types.js";
+import { assertNoDuplicatePaymentTuples } from "./entitlement-guard.js";
 
 export interface SettlementRow {
   readonly claimId: string;
   readonly address: string;
   readonly asaId: PaymentAsset;
   readonly amountBase: bigint;
+  /**
+   * Stable identifier of the underlying obligation (e.g. `${minerKey}|${rewardNumbers}|${asaId}`).
+   * Only required when two rows would otherwise be indistinguishable on chain — same receiver,
+   * same asset, same amount. See entitlement-guard.ts.
+   */
+  readonly entitlementKey?: string;
+  /**
+   * ISO timestamp at which the source pre-signed envelope expires. Envelopes in
+   * `main.reward_pending_claims` live 5 minutes (`claim.js` writes `Date.now() + 3e5`). Nothing on
+   * the settlement path used to consult this, which is how two envelopes that expired on
+   * 2026-07-17 were paid on 2026-07-24. Optional for backwards compatibility; when present it is
+   * enforced against `generatedAt`.
+   */
+  readonly envelopeExpiresAt?: string;
 }
 
 export interface SettlementExclusion {
@@ -67,11 +82,23 @@ function parseRow(value: any, index: number): SettlementRow {
   const asaId = Number(value?.asaId);
   if (!Number.isSafeInteger(asaId) || !allowedAssets.has(asaId))
     throw new Error(`rows[${index}].asaId: unsupported payment ASA`);
+  const entitlementKey = value?.entitlementKey;
+  if (entitlementKey !== undefined && typeof entitlementKey !== "string")
+    throw new Error(`rows[${index}].entitlementKey: must be a string when present`);
+  const envelopeExpiresAt = value?.envelopeExpiresAt;
+  if (envelopeExpiresAt !== undefined) {
+    if (typeof envelopeExpiresAt !== "string")
+      throw new Error(`rows[${index}].envelopeExpiresAt: must be an ISO string when present`);
+    if (Number.isNaN(Date.parse(envelopeExpiresAt)))
+      throw new Error(`rows[${index}].envelopeExpiresAt: unparseable timestamp`);
+  }
   return {
     claimId: parseClaimId(value?.claimId, `rows[${index}]`),
     address: parseAddress(value?.address, `rows[${index}]`),
     asaId: asaId as PaymentAsset,
     amountBase: parsePositiveBase(value?.amountBase, `rows[${index}].amountBase`),
+    ...(entitlementKey === undefined ? {} : { entitlementKey }),
+    ...(envelopeExpiresAt === undefined ? {} : { envelopeExpiresAt }),
   };
 }
 
@@ -129,6 +156,24 @@ function assertUniqueClaims(
   }
 }
 
+/**
+ * Refuse any row whose source envelope had already expired when the manifest was generated.
+ * Boundary fails closed: expiry exactly at `generatedAt` counts as expired.
+ */
+function assertNoExpiredEnvelopes(rows: readonly SettlementRow[], generatedAt: string) {
+  const generated = Date.parse(generatedAt);
+  if (Number.isNaN(generated)) return; // generatedAt is validated separately
+  for (const row of rows) {
+    if (!row.envelopeExpiresAt) continue;
+    const expires = Date.parse(row.envelopeExpiresAt);
+    if (expires <= generated)
+      throw new Error(
+        `expired envelope for claim ${row.claimId}: envelope expired at ` +
+          `${row.envelopeExpiresAt} but the manifest was generated at ${generatedAt}`
+      );
+  }
+}
+
 export function parseSettlementManifest(raw: string): SettlementManifest {
   const value = JSON.parse(raw);
   if (value?.version !== 1) throw new Error("settlement manifest version must be 1");
@@ -153,6 +198,10 @@ export function parseSettlementManifest(raw: string): SettlementManifest {
       a.claimId.localeCompare(b.claimId)
     );
   assertUniqueClaims(rows, exclusions);
+  assertNoExpiredEnvelopes(rows, value.generatedAt);
+  // Distinct claimIds are NOT sufficient authority to pay the same wallet the same amount twice
+  // in one batch — that is exactly how 103,020,000 base units were paid twice on 2026-07-24.
+  assertNoDuplicatePaymentTuples(rows);
   const aggregateBase =
     value.aggregateBase === "0"
       ? 0n
@@ -200,6 +249,7 @@ export function deriveSettlementUnits(manifest: SettlementManifest): SendUnit[] 
     amountBase: row.amountBase,
     intentId: computeSettlementIntentId(manifest, row),
     intentDomain: "settlement",
+    ...(row.entitlementKey === undefined ? {} : { entitlementKey: row.entitlementKey }),
   }));
 }
 

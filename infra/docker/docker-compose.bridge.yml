@@ -1,0 +1,36 @@
+# Fry 3.0 — Tooth B bridge overlay (ADDITIVE; separate file from docker-compose.ares.yml
+# so the tracked ares compose is untouched). Reversal: docker compose -f this down; rm file.
+# NOT started pre-flip. At the P9c flip: set FRY3_BRIDGE_DRY_RUN=0 in infra/docker/.env and
+# `docker compose -f docker-compose.ares.yml -f docker-compose.bridge.yml up -d fry3-bridge`,
+# then a bounded foreground health-check. Secrets come from .env / op:// — never literals here.
+name: fry3
+networks:
+  supabase_default:
+    external: true
+  fry3-net:
+    external: true
+
+services:
+  bridge:
+    build:
+      context: ../../
+      dockerfile: infra/docker/bridge.Dockerfile
+    container_name: fry3-bridge
+    networks: [supabase_default, fry3-net]
+    environment:
+      FRY3_FEM_TOKEN_SHIM: ${FRY3_FEM_TOKEN_SHIM}
+      FRY3_BRIDGE_FEM_BASELINE: ${FRY3_BRIDGE_FEM_BASELINE}
+      # PG: same migrated fry3 DB the api uses (supabase-db, fry3_app role)
+      FRY3_DATABASE_URL: postgresql://fry3_app:${FRY3_PGPW}@supabase-db:5432/fry3
+      # live Mongo (host mongod, TLS-insecure per ARES00 gotcha) — value from .env / op://
+      FRY3_BRIDGE_MONGO_URI: ${FRY3_BRIDGE_MONGO_URI}
+      # Discord drift webhook (op://dbRewards/DISCORD_WEBHOOK_URL) — value from .env / op://
+      FRY3_BRIDGE_WEBHOOK_URL: ${FRY3_BRIDGE_WEBHOOK_URL}
+      # DRY_RUN defaults true in code; explicitly pinned here until the flip flips it to 0
+      FRY3_BRIDGE_DRY_RUN: ${FRY3_BRIDGE_DRY_RUN:-1}
+      FRY3_BRIDGE_INTERVAL_MS: "300000"
+      FRY3_BRIDGE_CHECKSUM_N: "100"
+      FRY3_BRIDGE_MAX_LAG_MS: "900000"
+      FRY3_BRIDGE_PERSIST_CYCLES: "3"
+    restart: unless-stopped
+    # started only at flip via explicit `up -d fry3-bridge`; no ports (internal only)

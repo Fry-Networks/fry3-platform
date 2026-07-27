@@ -25,7 +25,7 @@ RUN npx esbuild src/server.ts --bundle --platform=node --format=esm --target=nod
       --alias:@fry3/integration-health=../../packages/integration-health/src/index.ts \
       --alias:@fry3/heartbeat-ingest=../../services/heartbeat-ingest/src/online-state.ts \
       --alias:@fry3/claim-dispatcher=../../services/claim-dispatcher/src/claim.ts \
-      --external:fastify --external:@prisma/client --external:.prisma --outfile=dist/server.mjs
+      --external:fastify --external:@prisma/client --external:.prisma --external:mongodb --outfile=dist/server.mjs
 
 # ---- runtime stage ----
 FROM node:22-alpine
@@ -40,7 +40,7 @@ COPY apps/api/package.json ./apps/api/package.json
 WORKDIR /app/packages/db
 RUN npm install --no-audit --no-fund --omit=dev && npx prisma generate
 WORKDIR /app/apps/api
-RUN npm install --no-audit --no-fund --omit=dev fastify@^4.28.0 @prisma/client
+RUN npm install --no-audit --no-fund --omit=dev fastify@^4.28.0 @prisma/client mongodb@^6.9.0
 COPY --from=build /app/apps/api/dist/server.mjs ./server.mjs
 ENV NODE_PATH=/app/packages/db/node_modules:/app/apps/api/node_modules
 USER node

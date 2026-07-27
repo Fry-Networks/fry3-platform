@@ -1,0 +1,85 @@
+/**
+ * Tooth B (R3) — bridge entrypoint (EXCLUDED from the gate; image-build only).
+ *
+ * Managed service: started via `docker compose up -d fry3-bridge`, then a
+ * bounded foreground health-check (standing scope §3). The comparator runs a
+ * long-lived bounded loop; drift alarms post to Discord. DRY_RUN defaults TRUE,
+ * so pre-flip the writer plans-but-writes-nothing and alerts are suppressed;
+ * flip-time sets FRY3_BRIDGE_DRY_RUN=0.
+ */
+
+import { loadConfig } from "./config.js";
+import { MAPPINGS } from "./mappings.js";
+import { runCycle, initStates, type MonitorDeps } from "./monitor.js";
+import { DEFAULT_USER_AGENT } from "./alert.js";
+import { connect, liveSample, liveReadSource, liveSink, close } from "./runtime.js";
+
+const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
+
+async function fetchSender(
+  url: string,
+  body: string,
+  headers: Record<string, string>,
+): Promise<{ status: number }> {
+  const res = await fetch(url, { method: "POST", body, headers });
+  return { status: res.status };
+}
+
+async function main(): Promise<void> {
+  const cfg = loadConfig(process.env);
+  const live = connect(cfg.mongoUri, cfg.databaseUrl);
+  const deps: MonitorDeps = {
+    mappings: MAPPINGS,
+    sample: (m) => liveSample(live, m, cfg.checksumSampleSize),
+    readSource: (m) => liveReadSource(live, m),
+    sink: (op) => liveSink(live, op),
+    send: fetchSender,
+    alert: { webhookUrl: cfg.webhookUrl, userAgent: cfg.userAgent || DEFAULT_USER_AGENT },
+    now: () => Date.now(),
+    dryRun: cfg.dryRun,
+    thresholds: cfg.thresholds,
+  };
+  const states = initStates(MAPPINGS);
+  // eslint-disable-next-line no-console
+  console.log(`[fry3-bridge] start dryRun=${cfg.dryRun} interval=${cfg.intervalMs}ms`);
+
+  // One-shot READ-ONLY baseline (iter31): FRY3_BRIDGE_BASELINE=1 samples every
+  // mapping once, prints the real MappingSample per mapping, and exits WITHOUT
+  // entering the monitor loop or writing anything. Proves the live bindings
+  // resolve against the live schema and records the pre-flip drift numbers
+  // (pre-flip drift is EXPECTED nonzero; "clean" is a post-flip verdict).
+  if ((process.env.FRY3_BRIDGE_BASELINE ?? "") === "1") {
+    for (const m of MAPPINGS) {
+      const s = await liveSample(live, m, cfg.checksumSampleSize);
+      // eslint-disable-next-line no-console
+      console.log(`[fry3-bridge] baseline ${JSON.stringify(s)}`);
+    }
+    await close(live);
+    return;
+  }
+
+  let cycle = 0;
+  const MAX_CYCLES = 1_000_000; // bounded backstop; container is restart:unless-stopped
+  while (cycle < MAX_CYCLES) {
+    cycle += 1;
+    try {
+      const r = await runCycle(deps, states, cycle);
+      // eslint-disable-next-line no-console
+      console.log(
+        `[fry3-bridge] cycle=${cycle} firing=${r.firing} alerted=${r.alerted} ` +
+          `writes(planned=${r.writes.planned},applied=${r.writes.applied},dry=${r.writes.skippedDryRun})`,
+      );
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(`[fry3-bridge] cycle=${cycle} error`, err);
+    }
+    await sleep(cfg.intervalMs);
+  }
+  await close(live);
+}
+
+main().catch((err) => {
+  // eslint-disable-next-line no-console
+  console.error("[fry3-bridge] fatal", err);
+  process.exit(1);
+});
