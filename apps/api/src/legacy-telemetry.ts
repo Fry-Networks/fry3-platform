@@ -48,8 +48,12 @@ export function measurementTypeToKind(t: string | null | undefined): string {
 /** Frozen heartbeat FEM regex (app.py upsert_installation). */
 export const FEM_KEY_RE = /^FEM-[a-zA-Z0-9]{32}$/;
 
+/** Miner families that may self-register without the shared bearer.
+ *  Mirrors _OPEN_REG_PREFIXES in the FastAPI implementation on ZEUS00. */
+export const OPEN_REG_PREFIXES = ["FEM-"] as const;
+
 /** Frozen MinerCode enum (models.py). */
-export const MINER_CODES = ["BM", "IDM", "ODM", "ISM", "OSM", "RDN", "SDN", "SVN", "IRM", "FEM"] as const;
+export const MINER_CODES = ["BM", "IDM", "ODM", "ISM", "OSM", "RDN", "SDN", "SVN", "IRM", "FEM", "IOTVPN"] as const;
 const MINER_CODE_SET = new Set<string>(MINER_CODES);
 
 /** fem_ + 64 hex — matches generate_device_token (secrets.token_hex(32)). */
@@ -85,6 +89,14 @@ export function registerLegacyTelemetry(
   // gap-(b) FEM device-token compat-shim (P9c): optional Mongo mirror, injected only when
   // FRY3_FEM_TOKEN_SHIM=1 (see server.ts). Undefined => behaviour identical to pre-shim.
   tokenMirror?: (minerKey: string, installId: string, deviceTokenHash: string) => Promise<{ ok: boolean; error?: string }>,
+  // Mirror for the heartbeat's OWN fields (os/hostname/device_name/is_installed/
+  // versions). Separate from tokenMirror because that one's contract is to write the
+  // token pair and nothing else; see fem-token-mongo-sink.ts.
+  fieldMirror?: (minerKey: string, installId: string, body: Record<string, unknown>) => Promise<{ ok: boolean; error?: string }>,
+  // Mirror for the dashboard-visible main.devices doc. Separate again from fieldMirror:
+  // that one keys on {miner_key, install_id} in PoC.installations, this one keys on
+  // {miner_key} alone in main.devices. See fem-token-mongo-sink.ts.
+  deviceDocMirror?: (minerKey: string) => Promise<{ ok: boolean; error?: string }>,
 ) {
   // POST /installations/{miner_key}/installations/{install_id}
   // 202 RegistrationResponse {status:"ok", device_token: string|null}
@@ -103,9 +115,16 @@ export function registerLegacyTelemetry(
       return reply.code(400).send({ detail: "Body miner identity mismatch" });
 
     const isFem = FEM_KEY_RE.test(minerKey);
-    if (!isFem) {
-      // Non-FEM keys require the shared bearer (checked inside the frozen handler,
-      // after the identity check; missing and wrong token share one message there).
+    // Since the 2026-09-18 prefix migration there is no IOT- family: every device key is
+    // FEM-, so open registration and isFem now describe the same set and IOTVPN boards
+    // take the normal device-token path. FEM_KEY_RE stays [a-zA-Z0-9]{32} on purpose --
+    // live FEM keys are base36, not hex, and tightening it to hex would have excluded
+    // 19,993 of 20,047 devices.
+    const isOpenRegistration = isFem || OPEN_REG_PREFIXES.some((prefix) => minerKey.startsWith(prefix));
+    if (!isOpenRegistration) {
+      // Keys outside the open-registration families require the shared bearer (checked
+      // inside the frozen handler, after the identity check; missing and wrong token
+      // share one message there).
       const expected = process.env.API_BEARER_TOKEN ?? "";
       const token = bearerOf(req);
       if (!token || expected === "" || token !== expected) {
@@ -136,6 +155,27 @@ export function registerLegacyTelemetry(
     if (isFem && deviceToken && deviceTokenHash && tokenMirror) {
       const m = await tokenMirror(minerKey, installId, deviceTokenHash);
       if (!m.ok) req.log?.warn?.({ minerKey, installId, err: m.error }, "fem_token_mongo_mirror_failed");
+    }
+    // Mirror the heartbeat's own fields into PoC.installations. Runs for EVERY family,
+    // not just FEM: the frozen handler persists these for all of them, and IOT- devices
+    // self-register through this same route. Best-effort — a mirror failure must never
+    // change the 202 the device is waiting on.
+    if (fieldMirror) {
+      const f = await fieldMirror(minerKey, installId, body);
+      if (!f.ok) req.log?.warn?.({ minerKey, installId, err: f.error }, "installation_field_mirror_failed");
+    }
+    // Ensure the dashboard-visible main.devices doc exists. Runs for every family the
+    // mirror recognises; hardwareapi does the same on its own registration path, and
+    // the upsert is $setOnInsert so the two writers cannot fight. Wrapped in its own
+    // try/catch rather than relying on the mirror's: a throw here must not turn the
+    // device's 202 into a 500, which is the whole point of a best-effort mirror.
+    if (deviceDocMirror) {
+      try {
+        const dd = await deviceDocMirror(minerKey);
+        if (!dd.ok) req.log?.warn?.({ minerKey, err: dd.error }, "device_doc_mirror_failed");
+      } catch (e) {
+        req.log?.warn?.({ minerKey, err: e instanceof Error ? e.message : String(e) }, "device_doc_mirror_threw");
+      }
     }
     return reply.code(202).send({ status: "ok", device_token: deviceToken });
   });

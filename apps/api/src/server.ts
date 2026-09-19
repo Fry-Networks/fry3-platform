@@ -4,6 +4,7 @@
  * Server-side authorization. Integer/base-unit. Idempotent. Transactional claims.
  */
 import Fastify from "fastify";
+import { randomUUID } from "node:crypto";
 import { computeReward, DeviceStatus, RewardPolicyConfig } from "@fry3/reward-policy";
 import { classifyOnlineState, validateHeartbeatEnvelope } from "@fry3/heartbeat-ingest";
 import { evaluateClaim, ClaimStatus } from "@fry3/claim-dispatcher";
@@ -12,7 +13,7 @@ import { registerLegacyTelemetry } from "./legacy-telemetry.js";
 import { registerByod } from "./byod.js";
 // gap-(b) FEM device-token compat-shim (P9c). Type-only import => erased at build, no runtime
 // mongodb load; the mirror itself is dynamically imported in the isMain block only when enabled.
-import type { ApiTokenMirror } from "./fem-token-mongo-sink.js";
+import type { ApiTokenMirror, InstallationFieldMirror, DeviceDocMirror } from "./fem-token-mongo-sink.js";
 
 /** Minimal store interface — implemented by Prisma store; injectable for tests. */
 export interface ApiStore {
@@ -28,8 +29,16 @@ export interface ApiStore {
   byodActivate?(input: { licenseKey: string; deviceRef: string; now: Date }): Promise<{ ok: true; deviceId: string; activatedAt: Date; idempotent?: boolean } | { ok: false; code: number; reason: string }>;
 }
 
-export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore; tokenMirror?: ApiTokenMirror }) {
-  const app = Fastify({ logger: false, genReqId: () => crypto.randomUUID() });
+export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore; tokenMirror?: ApiTokenMirror; fieldMirror?: InstallationFieldMirror; deviceDocMirror?: DeviceDocMirror }) {
+  // logger was false, which silently discarded every req.log.warn in this service --
+  // including the best-effort Mongo mirror failures, which is how a WRITE-DENIED went
+  // unnoticed. warn level surfaces those; disableRequestLogging keeps per-request noise
+  // out of stdout so this stays an operational-error channel, not an access log.
+  const app = Fastify({
+    logger: { level: "warn" },
+    disableRequestLogging: true,
+    genReqId: () => randomUUID(),
+  });
   const policy = opts.policy;
   const store = opts.store;
 
@@ -196,7 +205,7 @@ export function buildServer(opts: { policy: RewardPolicyConfig; store?: ApiStore
     return c;
   });
 
-  registerLegacyTelemetry(app, store, opts.tokenMirror);
+  registerLegacyTelemetry(app, store, opts.tokenMirror, opts.fieldMirror, opts.deviceDocMirror);
   registerByod(app, store, policy);
 
   return app;
@@ -220,11 +229,19 @@ if (isMain) {
   // gap-(b) FEM device-token compat-shim: build the Mongo mirror ONLY when explicitly enabled.
   // Dynamic import keeps the `mongodb` driver out of the default (shim-off) runtime path.
   let tokenMirror: ApiTokenMirror | undefined;
+  let fieldMirror: InstallationFieldMirror | undefined;
+  let deviceDocMirror: DeviceDocMirror | undefined;
   if (process.env.FRY3_FEM_TOKEN_SHIM === "1" || process.env.FRY3_FEM_TOKEN_SHIM === "true") {
-    const { makeApiTokenMirror } = await import("./fem-token-mongo-sink.js");
+    const { makeApiTokenMirror, makeInstallationFieldMirror, makeDeviceDocMirror } = await import("./fem-token-mongo-sink.js");
     tokenMirror = await makeApiTokenMirror(process.env);
+    // Same gate and same Mongo URI: if the shim is on, PoC.installations is the
+    // collection this service is expected to keep current.
+    fieldMirror = await makeInstallationFieldMirror(process.env);
+    // Same gate and same Mongo URI again: main.devices is the dashboard's view of a
+    // device, and after the registration split this service is the only writer for IOT-.
+    deviceDocMirror = await makeDeviceDocMirror(process.env);
   }
-  const app = buildServer({ policy, store, tokenMirror });
+  const app = buildServer({ policy, store, tokenMirror, fieldMirror, deviceDocMirror });
   app.listen({ port: Number(process.env.PORT ?? 3000), host: process.env.HOST ?? "0.0.0.0" }).then(() => {
     console.log(`fry3 api listening (policy v${policy.version}, storageWeight=${policy.storageCapabilityWeight})`);
   });

@@ -181,9 +181,15 @@ export class PrismaStore implements ApiStore {
         await this.prisma.femInstance.update({ where: { id: fi.id }, data: { lastSeenAt: input.now } });
       }
     }
-    if (!deviceId && input.minerCode) {
+    if (!deviceId && input.hexId) {
+      // Was: matched input.minerCode (a miner CODE such as "IOTVPN") against minerKey /
+      // canonicalId (a miner KEY such as FEM-xxx). Those namespaces never intersect, so
+      // this branch could not resolve a device under any input. hexId is the
+      // /measurements/:hexId path parameter and is the only device-identifying value the
+      // fallback actually receives; the firmware telemetry producer sends the miner key
+      // there, which makes this lookup coherent end to end.
       const d = await this.prisma.device.findFirst({
-        where: { OR: [{ minerKey: input.minerCode }, { canonicalId: input.minerCode }] },
+        where: { OR: [{ minerKey: input.hexId }, { canonicalId: input.hexId }] },
         select: { id: true },
       });
       if (d) deviceId = d.id;
