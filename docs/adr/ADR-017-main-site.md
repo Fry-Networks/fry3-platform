@@ -4,7 +4,7 @@
 **Date:** 2026-07-19
 
 ## Context
-`frynetworks.com` apex is Wix-hosted (`saf7001.wixsite.com/fry-networks`), fronted by Bunny zone 6146466 (fouc-staging) with 5 edge rules (careers/whitepaper/litepaper/docs/explorer overrides). Prior sessions show repeated Wix pain: HEAD embeds don't run scripts, large-payload stalls, viewBox/HTML-injection bugs, baked-loading-screen complexity, documentServices bulk-mutation fragility. Wix content export needs the Wix MCP (ExecuteWixAPI).
+`frynetworks.com` apex is Wix-hosted (`ACCOUNT-REDACTED.wixsite.com/fry-networks`), fronted by Bunny zone 6146466 (fouc-staging) with 5 edge rules (careers/whitepaper/litepaper/docs/explorer overrides). Prior sessions show repeated Wix pain: HEAD embeds don't run scripts, large-payload stalls, viewBox/HTML-injection bugs, baked-loading-screen complexity, documentServices bulk-mutation fragility. Wix content export needs the Wix MCP (ExecuteWixAPI).
 
 ## Evidence
 - Wix is the #1 source of frynetworks.com defects in memory (FOUC, SVG viewBox collapse, injection-order scramble, nuclear-hide, loading-overlay).
